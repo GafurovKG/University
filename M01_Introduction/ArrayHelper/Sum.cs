@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace ArrayHelper
 {
-    class Sum
+    public class Sum
     {
+        public static int sum(int[,] array)
+        {
+            int sum = 0;
+            foreach (int item in array)
+            {
+                sum += item >= 0 ? item : 0;
+            }
+            return sum;
+        }
     }
 }
