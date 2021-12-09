@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RectangleHelper
 {
-    class Calc
+    public class Rectangl
     {
         int a;
         int b;
 
-        Calc(int a, int b)
+        public Rectangl(int a, int b)
         {
             this.a = Math.Abs(a);
             this.b = Math.Abs(b);
