@@ -8,19 +8,19 @@ namespace RectangleHelper
 {
     public class Rectangl
     {
-        int a;
-        int b;
+        private readonly int a;
+        private readonly int b;
 
         public Rectangl(int a, int b)
         {
             this.a = Math.Abs(a);
             this.b = Math.Abs(b);
         }
-        public int perimetr()
+        public int Perimetr()
         {
             return a*2+b*2;
         }
-        public int square()
+        public int Square()
         {
             return a * b;
         }

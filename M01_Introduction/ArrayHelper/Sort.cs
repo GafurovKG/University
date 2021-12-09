@@ -8,10 +8,10 @@ namespace ArrayHelper
 {
     public class Sort
     {
-         public static void sortASC(int[] array, bool isASC)
+         public static void SortASC(int[] array, bool isASC)
         {
             int temp;
-            int maxN = array.Length - 1;
+            var maxN = array.Length - 1;
             do
             {
                 for (int n = 0; n < maxN; n++)

@@ -8,10 +8,10 @@ namespace ArrayHelper
 {
     public class Sum
     {
-        public static int sum(int[,] array)
+        public static int Summ(int[,] array)
         {
-            int sum = 0;
-            foreach (int item in array)
+           var sum = 0;
+            foreach (var item in array)
             {
                 sum += item >= 0 ? item : 0;
             }

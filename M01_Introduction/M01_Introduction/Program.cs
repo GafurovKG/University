@@ -11,7 +11,7 @@ namespace M01_Introduction
         {
             //Создание массива для Sort
             Console.WriteLine("Сортировка массива. Диапазон значений элементов массива от -100 до 100)");
-            Random rnd = new Random();
+            Random rnd = new();
             Console.Write("Укажите длину массива : ");
             int n = Convert.ToInt32(Console.ReadLine());
 
@@ -27,13 +27,13 @@ namespace M01_Introduction
                 Console.Write(item + ", ");
             }
            
-            Sort.sortASC(array, true); 
+            Sort.SortASC(array, true); 
             Console.Write("\nМассив отсортированный по возрастанию: ");
             foreach (var item in array)
             {
                 Console.Write(item + ", ");
             }
-            Sort.sortASC(array, false);
+            Sort.SortASC(array, false);
             Console.Write("\nМассив отсортированный по убыванию: ");
             foreach (var item in array)
             {
@@ -58,7 +58,7 @@ namespace M01_Introduction
             }
 
             Console.Write("\nСумма положительных элементов массива: ");
-            Console.WriteLine(Sum.sum(array2));
+            Console.WriteLine(Sum.Summ(array2));
 
             //прямоугольник
             Console.WriteLine("\nРассчет параметров прямоугольника");
@@ -67,9 +67,9 @@ namespace M01_Introduction
             Console.Write("Ширина прямоугольника: ");
             int b = Convert.ToInt32(Console.ReadLine());
 
-            Rectangl rect = new Rectangl(5, 10);
-            Console.WriteLine("Площадь прямоугольника: " + rect.square());
-            Console.WriteLine("Периметр прямоугольника: " + rect.perimetr());
+            Rectangl rect = new(a, b);
+            Console.WriteLine("Площадь прямоугольника: " + rect.Square());
+            Console.WriteLine("Периметр прямоугольника: " + rect.Perimetr());
         }
     
     }
