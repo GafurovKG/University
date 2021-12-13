@@ -32,7 +32,7 @@ namespace M02_Creating_types
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(email, fullName);
+            return HashCode.Combine(email, fullName); // можно было и Combine, по любому полю хватило бы.
         }
         public string ShowInfo()
         {

@@ -8,7 +8,7 @@ namespace M02_Creating_types
         static void Main(string[] args)
         {
             string[] subjects = { "Maths", "Philosophy", "History", "PE", "English", "Sport" };
-
+            
             var student1c1 = new Student("pete.pupkin@epam.com");
             var student2c1 = new Student("vasa.vasechkin@epam.com");
             var student3c1 = new Student("kola.kolishev@epam.com");
@@ -21,20 +21,31 @@ namespace M02_Creating_types
 
             Dictionary<Student, HashSet<string>> studentSubjectDict = new();
 
-            Random rand = new Random();
+            ////Если инициализировать Value при добавлении в Словарь, Value перезапишется
+            //studentSubjectDict[student1c1] = new HashSet<string> { "Maths", "Philosophy", "History" };
+            //studentSubjectDict[student1c2] = new HashSet<string> { "History", "PE", "English" };
 
-            //запоняем studentSubjectDict через циклы
+            //запоняем studentSubjectDict через циклы -Value сохраняется от первого варианта. 
+            Random rand = new Random();
             foreach (var stud in students)
             {
                 HashSet<string> subj = new HashSet<string>();
                 do
                 {
-                    subj.Add(subjects[rand.Next(5)]); //предметы тожене должны повтояться
-                } while (subj.Count<=2);
+                    subj.Add(subjects[rand.Next(5)]); //предметы тожене не должны повтояться
+                } while (subj.Count <= 2);
                 studentSubjectDict.TryAdd(stud, subj);
+
+                //// проверка какое из Value сохранилось
+                //Console.WriteLine(stud.ShowInfo());
+                //foreach (var subject in subj)
+                //{
+                //    Console.Write(subject + " ");
+                //}
+                //Console.WriteLine("\n");
             }
 
-            //проверка studentSubjectDict
+            //проверка итогового studentSubjectDict
             foreach (var dict in studentSubjectDict)
             {
                 Console.WriteLine(dict.Key.ShowInfo());
