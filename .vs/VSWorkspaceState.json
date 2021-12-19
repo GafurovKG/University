@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\M02_Creating_types",
+    "\\M02_Creating_types\\M02_Creating_types"
   ],
+  "SelectedNode": "\\M02_Creating_types\\M02_Creating_types\\Student.cs",
   "PreviewInSolutionExplorer": false
 }
