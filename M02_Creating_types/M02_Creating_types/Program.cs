@@ -5,7 +5,7 @@ namespace M02_Creating_types
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             string[] subjects = { "Maths", "Philosophy", "History", "PE", "English", "Sport" };
             
@@ -22,10 +22,10 @@ namespace M02_Creating_types
             Dictionary<Student, HashSet<string>> studentSubjectDict = new();
 
             //запоняем studentSubjectDict через циклы. При встече дубликатов по key хэш, они отлетают, Value остается от первого записаннго student 
-            Random rand = new Random();
+            Random rand = new ();
             foreach (var stud in students)
             {
-                HashSet<string> subj = new HashSet<string>();
+                HashSet<string> subj = new ();
                 do
                 {
                     subj.Add(subjects[rand.Next(5)]); //предметы тожене не должны повтояться
