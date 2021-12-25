@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
 
-
 namespace M03_Strings
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             // Task 1. Average length of words
             Console.WriteLine("Задача 1. Расчет срдней длины слов");
@@ -18,7 +17,7 @@ namespace M03_Strings
 
             Console.WriteLine("Средняя длина слова - {0:0.0} символов", average);
 
-            ////Task 2. Doubles
+            // Task 2. Doubles
             Console.WriteLine("\nЗадаа 2. Дублировние символов");
             Console.WriteLine("Введите первую строку:");
             var str1 = Console.ReadLine();
@@ -26,8 +25,8 @@ namespace M03_Strings
             var str2 = Console.ReadLine();
             Console.WriteLine(Doubles.DoIt(str1, str2));
 
-            //Task 3. Sum of overlongs
-            // Полагем, что вводятся только цифры. Если делать все проверки. я бы сделал нестатичекий класс с конструторами и сеттерами для воодимых строк
+            // Task 3. Sum of overlongs
+            // Полагаем, что вводятся только цифры. Если делать все проверки. я бы сделал нестатичекий класс с конструторами и сеттерами для воодимых строк
             Console.WriteLine("\nЗадача 3. Сумма больших положительнх чисел");
             Console.WriteLine("Введи число 1");
             string number1 = Console.ReadLine();
@@ -40,17 +39,18 @@ namespace M03_Strings
             var strFoReverse = Console.ReadLine();
             Console.WriteLine(ReverseWords.DoIt(strFoReverse));
 
-            //Task 5 Phone nombers
+            // Task 5 Phone nombers
             Console.WriteLine("\nЗадача 5. Поиск номеров в строке в text.txt. Нажмите любую клавишу");
             Console.ReadKey();
-            StreamReader sr = new (@"..\..\..\text.txt");
+            StreamReader sr = new(@"..\..\..\text.txt");
             string inputText = sr.ReadToEnd();
             sr.Close();
-            StreamWriter sw = new (@"..\..\..\Numbers.txt");
+            StreamWriter sw = new(@"..\..\..\Numbers.txt");
             foreach (var item in PhoneNumbers.DoIt(inputText))
             {
-            sw.WriteLine(item);
+                sw.WriteLine(item);
             }
+
             sw.Close();
             Console.WriteLine("Номера телефонов записаны в Numbers.txt");
         }

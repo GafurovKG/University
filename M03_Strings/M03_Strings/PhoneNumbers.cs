@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace M03_Strings
 {
@@ -12,9 +9,9 @@ namespace M03_Strings
         {
             var PhoneNumbers = new List<string>();
             var PhoneNumberBuild = new StringBuilder();
-            for (int i =0; i < str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                if (Char.IsDigit(str[i]) || str[i].Equals( '(' ) || str[i].Equals( ')' ) || str[i].Equals( '-' ) || str[i].Equals( '+' ) || str[i].Equals(' '))
+                if (char.IsDigit(str[i]) || str[i].Equals('(') || str[i].Equals(')') || str[i].Equals('-') || str[i].Equals('+') || str[i].Equals(' '))
                 {
                     PhoneNumberBuild.Append(str[i]);
                 }
@@ -25,9 +22,13 @@ namespace M03_Strings
                         PhoneNumbers.Add(PhoneNumberBuild.ToString().Trim());
                         PhoneNumberBuild.Clear();
                     }
-                    else PhoneNumberBuild.Clear();
+                    else
+                    {
+                        PhoneNumberBuild.Clear();
+                    }
                 }
             }
+
             return PhoneNumbers;
         }
     }
