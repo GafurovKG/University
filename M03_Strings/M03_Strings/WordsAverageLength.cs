@@ -2,7 +2,7 @@
 
 namespace M03_Strings
 {
-    internal class WordsAverageLength
+    internal  class WordsAverageLength
     {
         public static double DoIt(string str)
         {
