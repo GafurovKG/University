@@ -1,15 +1,14 @@
 ﻿using System;
 using ArrayHelper;
 using RectangleHelper;
-using System.IO;
 
 namespace M01_Introduction
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            //Создание массива для Sort
+            // Создание массива для Sort
             Console.WriteLine("Сортировка массива. Диапазон значений элементов массива от -100 до 100)");
             Random rnd = new();
             Console.Write("Укажите длину массива : ");
@@ -26,13 +25,14 @@ namespace M01_Introduction
             {
                 Console.Write(item + ", ");
             }
-           
-            Sort.SortASC(array, true); 
+
+            Sort.SortASC(array, true);
             Console.Write("\nМассив отсортированный по возрастанию: ");
             foreach (var item in array)
             {
                 Console.Write(item + ", ");
             }
+
             Sort.SortASC(array, false);
             Console.Write("\nМассив отсортированный по убыванию: ");
             foreach (var item in array)
@@ -49,6 +49,7 @@ namespace M01_Introduction
                     array2[i, j] = rnd.Next(-10, 10);
                 }
             }
+
             Console.WriteLine("\n\nСумма положительных элементов двумерного массива 3х3 с рандомным заполнением (нажмите Enter)");
             Console.ReadLine();
             Console.Write("Исходный двумерный массив: ");
@@ -60,7 +61,7 @@ namespace M01_Introduction
             Console.Write("\nСумма положительных элементов массива: ");
             Console.WriteLine(Sum.Summ(array2));
 
-            //прямоугольник
+            // прямоугольник
             Console.WriteLine("\nРассчет параметров прямоугольника");
             Console.Write("Длина прямоугольника: ");
             int a = Convert.ToInt32(Console.ReadLine());
@@ -71,6 +72,5 @@ namespace M01_Introduction
             Console.WriteLine("Площадь прямоугольника: " + rect.Square());
             Console.WriteLine("Периметр прямоугольника: " + rect.Perimetr());
         }
-    
     }
 }

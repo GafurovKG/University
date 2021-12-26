@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RectangleHelper
 {
@@ -16,10 +12,12 @@ namespace RectangleHelper
             this.a = Math.Abs(a);
             this.b = Math.Abs(b);
         }
+
         public int Perimetr()
         {
-            return a*2+b*2;
+            return a * 2 + b * 2;
         }
+
         public int Square()
         {
             return a * b;
