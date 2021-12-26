@@ -2,7 +2,7 @@
 
 namespace M03_Strings
 {
-    internal class WordsAverageLength
+    internal  class WordsAverageLength
     {
         public static double DoIt(string str)
         {
@@ -15,7 +15,7 @@ namespace M03_Strings
                 letters += item.Length;
             }
 
-            return letters / words.Length;
+            return Math.Round((double)letters / words.Length, 1);
         }
     }
 }
