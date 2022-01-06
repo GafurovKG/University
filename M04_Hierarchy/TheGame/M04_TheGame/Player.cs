@@ -4,83 +4,143 @@
     {
         protected string PlayerName { get; init; }
 
-        private int _score;
-
-        public int Score
-        {
-            get
-            {
-                return _score;
-            }
-
-            set
-            {
-                _score += value;
-                SearchTarget();
-            }
-        }
+        public int Score { get; set; }
 
         public int Speed { get; set; } // Этот реализуемый член должен быть открытым! Почему???
 
-        public int XCoordsOfTarget { get; set; }
+        public Units Target { get; set; }
 
-        public int YCoordsOfTarget { get; set; }
-
+        // private Point Threat { get; set; }
         public Player(World currentWorld, string name) : base(currentWorld, name)
         {
             PlayerName = name;
             Score = 0;
-            Speed = 3;
+            Speed = 1;
+            Target = this;
         }
 
         // Алгоритм автоматического передвижения игрока - идет к ближйшему бонусу, если упирается в границу или припятствие пробует другое направление
-        public void DoStepToTarget()
+        public void DoStepToTarget(World currentWorld)
         {
-            Console.WriteLine("Двигаюсь к бонусу");
-            if (XCoordinate - XCoordsOfTarget < YCoordinate - YCoordsOfTarget)
+            ScanWorld(currentWorld);
+            Point newPosition = new(this.Coordinate.X, this.Coordinate.Y);
+
+            // сhoose a direction
+            int xDirection = Target.Coordinate.X - this.Coordinate.X;
+            int yDirection = Target.Coordinate.Y - this.Coordinate.Y;
+
+            // check gorizontal movement:
+            if (Math.Abs(xDirection) > Math.Abs(yDirection))
             {
-                if (XCoordinate - XCoordsOfTarget < 0)
+                if (xDirection > 0)
                 {
-                    // пробуем шаг вправо
-                    if (MyWorld.CheckNewPosition(XCoordinate + 1, YCoordinate))
+                    // try best way - moving rigth
+                    newPosition = new Point(this.Coordinate.X + Speed, this.Coordinate.Y);
+
+                    // if the best way is incorrect, choose second way
+                    if (!currentWorld.CheckNewPosition(newPosition))
                     {
-                        XCoordinate += 1;
+                        // if target lower us then second way is Down, else Up
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X, this.Coordinate.Y + Speed) : new Point(this.Coordinate.X, this.Coordinate.Y - Speed);
+                    }
+
+                    // if the second way is incorrect, choose third way
+                    if (!currentWorld.CheckNewPosition(newPosition))
+                    {
+                        // if target lower us then third way is Up, else Doun
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X, this.Coordinate.Y - Speed) : new Point(this.Coordinate.X, this.Coordinate.Y + Speed);
                     }
                 }
-                else if (XCoordinate - XCoordsOfTarget < 0)
+                else
                 {
-                    // делаем шаг влево
+                    // try best way - moving left
+                    newPosition = new Point(this.Coordinate.X - Speed, this.Coordinate.Y);
+
+                    // if the best way is incorrect, choose second way
+                    if (!currentWorld.CheckNewPosition(newPosition))
+                    {
+                        // if target lower us then second way is Down, else Up
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X, this.Coordinate.Y + Speed) : new Point(this.Coordinate.X, this.Coordinate.Y - Speed);
+                    }
+
+                    // if the second way is incorrect, choose third way
+                    if (!currentWorld.CheckNewPosition(newPosition))
+                    {
+                        // if target lower us then third way is Up, else Doun
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X, this.Coordinate.Y - Speed) : new Point(this.Coordinate.X, this.Coordinate.Y + Speed);
+                    }
                 }
             }
-            else
+
+            // vertical movement:
+            else if (Math.Abs(xDirection) <= Math.Abs(yDirection))
             {
-                if (YCoordinate - YCoordsOfTarget < 0)
+                if (yDirection > 0)
                 {
-                    // делаем шаг вниз
+                    // try best way - moving doun
+                    newPosition = new Point(this.Coordinate.X, this.Coordinate.Y + 1);
+
+                    // if the best way is incorrect, choose second way
+                    if (!currentWorld.CheckNewPosition(newPosition))
+                    {
+                        // if target is to the right of us us then second way is Right, else Left
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X + 1, this.Coordinate.Y) : new Point(this.Coordinate.X - 1, this.Coordinate.Y);
+                    }
+
+                    // if the second way is incorrect, choose third way
+                    if (!currentWorld.CheckNewPosition(newPosition))
+                    {
+                        // if target is to the right of us us then second way is Left, else Rigth
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X - 1, this.Coordinate.Y) : new Point(this.Coordinate.X + 1, this.Coordinate.Y);
+                    }
                 }
-                else if (XCoordinate - XCoordsOfTarget > 0)
+                else
                 {
-                    // делаем шаг вверх
+                    // try best way - moving up
+                    newPosition = new Point(this.Coordinate.X, this.Coordinate.Y - Speed);
+
+                    // if the best way is incorrect, choose second way
+                    if (!currentWorld.CheckNewPosition(newPosition))
+                    {
+                        // if target is to the right of us us then second way is Right, else Left
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X + Speed, this.Coordinate.Y) : new Point(this.Coordinate.X - Speed, this.Coordinate.Y);
+                    }
+
+                    // if the second way is incorrect, choose third way
+                    if (!currentWorld.CheckNewPosition(newPosition))
+                    {
+                        // if target is to the right of us us then second way is Left, else Rigth
+                        newPosition = yDirection > 0 ? new Point(this.Coordinate.X - Speed, this.Coordinate.Y) : new Point(this.Coordinate.X + Speed, this.Coordinate.Y);
+                    }
                 }
+            }
+
+            if (currentWorld.CheckNewPosition(newPosition))
+            {
+                this.Coordinate = newPosition;
             }
         }
 
         // Ищем ближайший бонус. Метод используется в начале игры и после каждого бонуса.
-        // Возможно, реализацию метода лучше перенести в World: Unit запрашивает у World подходящую цель
-        public void SearchTarget()
+        public void ScanWorld(World currentWorld)
         {
-            int xdistant = MyWorld.Height;
-            int ydistant = MyWorld.Width;
+            int xdistant = currentWorld.Height;
+            int ydistant = currentWorld.Width;
 
-            // Если дистанция до item ближе чем до сравниваемой точки, то записываем в target координаты item. Через сумму квадратов катетов
-            foreach (var item in MyWorld.WorldUnits)
+            // Если дистанция до item ближе чем до сравниваемой точки, то записываем в target координаты item. Дистанция (биссектриса) рассчитыается через сумму квадратов катетов
+            foreach (var item in currentWorld.WorldUnits)
             {
-                if (item is Bonus && (Math.Pow(item.XCoordinate - this.XCoordinate, 2) + Math.Pow(item.YCoordinate - this.YCoordinate, 2)
-                    < Math.Pow(xdistant - this.XCoordinate, 2) + Math.Pow(ydistant - this.YCoordinate, 2)))
+                if (item is Bonus && (Math.Pow(item.Coordinate.X - this.Coordinate.X, 2) + Math.Pow(item.Coordinate.Y - this.Coordinate.Y, 2)
+                    < Math.Pow(xdistant - this.Coordinate.X, 2) + Math.Pow(ydistant - this.Coordinate.Y, 2)))
                 {
-                    XCoordsOfTarget = item.XCoordinate;
-                    YCoordsOfTarget = item.YCoordinate;
+                    Target = item;
                 }
+
+                // else if (item is Monster && (Math.Pow(item.Coordinate.Y - this.Coordinate.Y, 2) + Math.Pow(item.Coordinate.Y - this.Coordinate.Y, 2)
+                // < Math.Pow(xdistant - this.Coordinate.X, 2) + Math.Pow(ydistant - this.Coordinate.Y, 2)))
+                // {
+                // Threat = item.Coordinate;
+                // }
             }
         }
     }

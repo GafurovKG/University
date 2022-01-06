@@ -1,42 +1,41 @@
-﻿// See https://aka.ms/new-console-template for more information
-using M04_TheGame;
+﻿using M04_TheGame;
 
-var narnia = new World(100, 100);
+var narnia = new World(20, 20);
 
-// var apple = new Bonus(narnia, "Яюблоко", 100);
+var apple = new Bonus(narnia, "Яюблоко", 100);
 
-// var banana = new Bonus(narnia, "Банан", 130);
+var banana = new Bonus(narnia, "Банан", 130);
 
-// var obstacles1 = new Obstacles(narnia, "Tree");
+var obstacles1 = new Obstacles(narnia, "Tree");
 
-// var obstacles2 = new Obstacles(narnia, "Stone");
+var obstacles2 = new Obstacles(narnia, "Stone");
+
 var wolf1 = new Wolf(narnia, "Снежок");
-
-var wolf2 = new Wolf(narnia, "Ворчун");
 
 var bear1 = new Bear(narnia, "Топтыга");
 
 var player = new Player(narnia, "Капитан Америка");
 
-player.SearchTarget();
+// вывод имен чтобы компилятор не ругался на бесполезную инициализации Юниов
+Console.WriteLine(apple.Name);
 
-wolf1.SearchTarget();
+Console.WriteLine(banana.Name);
 
-wolf2.SearchTarget();
+Console.WriteLine(bear1.Name);
 
-bear1.SearchTarget();
+Console.WriteLine(wolf1.Name);
 
-foreach (var item in narnia.WorldUnits)
+Console.WriteLine(obstacles1.Name);
+
+Console.WriteLine(obstacles2.Name);
+
+Console.WriteLine(player.Name);
+
+Console.WriteLine("\n\n Начало игры. Чтобы сделать ход нажжмите Enter\n");
+
+while (narnia.DoStep())
 {
-    if (item is IMove)
-    {
-        Console.WriteLine($"Я {item.GetType().Name} {item.Name}, нахожусь в точке {item.XCoordinate}, {item.YCoordinate}," +
-            $" моя цель в точке {((IMove)item).XCoordsOfTarget}, {((IMove)item).YCoordsOfTarget}");
-    }
-    else if (item is Bonus || item is Obstacles)
-    {
-        Console.WriteLine($"Я {item.GetType().Name} {item.Name}, нахожусь в точке {item.XCoordinate}, {item.YCoordinate}");
-    }
+    narnia.ShowInfo();
+    narnia.PrintWorld();
+    Console.ReadLine();
 }
-
-Console.WriteLine(player.Score);
