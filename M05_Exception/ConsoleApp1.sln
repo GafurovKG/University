@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M05_Exception", "ConsoleApp1\M05_Exception.csproj", "{8453892F-9252-4CD3-BA8E-CA14BD2B091A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringConverter", "StringConverter\StringConverter.csproj", "{9517D6E5-C7AF-49F6-B04F-5C4A00DE36CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringConverter", "StringConverter\StringConverter.csproj", "{9517D6E5-C7AF-49F6-B04F-5C4A00DE36CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringConverter.Tests", "StrringConverter.Tests\StringConverter.Tests.csproj", "{47B487D5-7FCF-43A3-872E-10C0968EE59D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9517D6E5-C7AF-49F6-B04F-5C4A00DE36CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9517D6E5-C7AF-49F6-B04F-5C4A00DE36CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9517D6E5-C7AF-49F6-B04F-5C4A00DE36CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47B487D5-7FCF-43A3-872E-10C0968EE59D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47B487D5-7FCF-43A3-872E-10C0968EE59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B487D5-7FCF-43A3-872E-10C0968EE59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47B487D5-7FCF-43A3-872E-10C0968EE59D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
