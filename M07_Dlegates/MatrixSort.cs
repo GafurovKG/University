@@ -4,63 +4,81 @@
 
     internal static class MatrixSort
     {
-        private static ISortStrategy sortStrategy;
-
-        private delegate int[] SortStrategyDelegate(int[,] unsortedMatrix);
-
-        internal static int[,] SortMatrix(this int[,] inputMatrix, ISortStrategy _sortStrategy, bool chooseSortDirection)
+        internal static int[,] SortMatrix(int[,] inputMatrix, Func<int[], int[], bool> sortStrategy, bool ascendingDirection)
         {
-            sortStrategy = _sortStrategy ?? throw new ArgumentNullException(nameof(sortStrategy));
-            int[] arrayOfRowsKey = sortStrategy.SortByStratagy(inputMatrix);
-            int key = arrayOfRowsKey[0];
-            int index = 0;
-            
+            var maxN = inputMatrix.GetLength(0) - 1;
+            do
+            {
+                for (int i = 0; i < maxN; i++)
+                {
+                    var rowA = new List<int>();
+                    var rowB = new List<int>();
+                    for (int j = 0; j < inputMatrix.GetLength(1); j++)
+                    {
+                        rowA.Add(inputMatrix[i, j]);
+                        rowB.Add(inputMatrix[i + 1, j]);
+                    }
+
+                    bool rowABiggerRowB = sortStrategy(rowA.ToArray(), rowB.ToArray());
+                    for (int n = 0; n < rowA.Count; n++)
+                    {
+                        if (rowABiggerRowB & !ascendingDirection || !rowABiggerRowB & ascendingDirection)
+                        {
+                            inputMatrix[i, n] = rowA[n];
+                            inputMatrix[i + 1, n] = rowB[n];
+                        }
+                        else
+                        {
+                            inputMatrix[i, n] = rowB[n];
+                            inputMatrix[i + 1, n] = rowA[n];
+                        }
+                    }
+                }
+
+                maxN--;
+            }
+            while (maxN > 0);
+
             return inputMatrix;
         }
 
-        //private static int[] SotrMatrixByStratagy(int[,] inputMatrix)
-        //{
-        //    int[,] arrayOfRowsKey = inputMatrix.ISortStrategy.SortByStratagy(); //ЗДЕСЬ ПРОБЛЕМА
-        //}
-
-        internal static ISortStrategy ChooseSortStrategy()
+        public static bool SortBySumStratagy(int[] rowA, int[] rowB)
         {
-            do
+            int rowASum = 0;
+            int rowBSum = 0;
+            for (int i = 0; i < rowA.Length; i++)
             {
-                Console.WriteLine("Сhoose the sorting method :\n- by the sum (1)\n- by the max element (2)\n- by the min element (3):");
-                ConsoleKeyInfo selectedKey = Console.ReadKey();
-                switch (selectedKey.KeyChar)
-                {
-                    case '1':
-                        return new SortBySumOfRow();
-                    case '2':
-                        return new SortByMaxOfRow();
-                    case '3':
-                        return new SortByMinOfRow();
-                    default:
-                        Console.WriteLine(" - incorrect choise\n");
-                        break;
-                }
-            } while (true);
+                rowASum += rowA[i];
+                rowBSum += rowB[i];
+            }
+
+            return rowASum > rowBSum;
         }
 
-        internal static bool ChooseSortDirection()
+        public static bool SortByMaxStratagy(int[] rowA, int[] rowB)
         {
-            do
+            int rowAMax = rowA[0];
+            int rowBMax = rowB[0];
+            for (int i = 1; i < rowA.Length; i++)
             {
-                Console.WriteLine("\n\nСhoose the sorting direction :\n- ascending (+)\n- descending (-):");
-                ConsoleKeyInfo selectedKey = Console.ReadKey();
-                switch (selectedKey.KeyChar)
-                {
-                    case '+':
-                        return true;
-                    case '-':
-                        return false;
-                    default:
-                        Console.WriteLine(" - incorrect choise\n");
-                        break;
-                }
-            } while (true);
+                rowAMax = rowA[i] > rowAMax ? rowA[i] : rowAMax;
+                rowBMax = rowB[i] > rowBMax ? rowB[i] : rowBMax;
+            }
+
+            return rowAMax > rowBMax;
+        }
+
+        public static bool SortByMinStratagy(int[] rowA, int[] rowB)
+        {
+            int rowAMax = rowA[0];
+            int rowBMax = rowB[0];
+            for (int i = 1; i < rowA.Length; i++)
+            {
+                rowAMax = rowA[i] < rowAMax ? rowA[i] : rowAMax;
+                rowBMax = rowB[i] < rowBMax ? rowB[i] : rowBMax;
+            }
+
+            return rowAMax > rowBMax;
         }
     }
 }
