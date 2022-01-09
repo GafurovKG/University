@@ -1,6 +1,6 @@
 ﻿try
 {
-    Console.WriteLine("\nВ строке найдено и сконвертированно число: " + StringConverter.StringConverter.DoIt("abc005465548438484356548"));
+    Console.WriteLine("\nВ строке найдено и сконвертированно число: " + StringConverter.StringConverter.DoIt("123231234567890 test"));
 }
 catch (OverflowException ex)
 {

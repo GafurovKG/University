@@ -5,13 +5,14 @@ namespace StringConverter
     public static class StringConverter
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        private static List<int> numbers = new();
-        private static int result;
-        private static bool isMinus = false;
-        private static int minusIndex = 0;
 
         public static int DoIt(string input)
         {
+            List<int> numbers = new();
+            int result = 0;
+            bool isMinus = false;
+            int minusIndex;
+
             // Проверим, будет ли число отрицательным: ищется первая комбинация минуса и цифры идущие подряд.
             // Все другие минусы будут рассотрены как прочие символы.
             for (minusIndex = 0; minusIndex < input.Length - 1; minusIndex++)
