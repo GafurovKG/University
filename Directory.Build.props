@@ -1,17 +1,12 @@
 <Project>
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <LangVersion>Latest</LangVersion>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Release' ">
-        <WarningsNotAsErrors>S1121,CS0121,SA1011</WarningsNotAsErrors>
+        <WarningsNotAsErrors>S1121,CS0121</WarningsNotAsErrors>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
-
-    <Target Name="Format Files" BeforeTargets="BeforeBuild" Condition="'$(Configuration)' == 'Release' ">
-        <Exec Command="dotnet format $(MSBuildProjectFile)" Condition="'$(MSBuildProjectExtension)' == '.csproj'"/>
-    </Target>    
 </Project>  
