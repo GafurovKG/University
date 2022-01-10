@@ -1,4 +1,4 @@
-﻿using M07_Dlegates;
+﻿using M07_Delegates;
 
 int[,] matrix =
 {
@@ -11,14 +11,14 @@ int[,] matrix =
 
 Matrixprint(matrix);
 
-matrix = MatrixSort.SortMatrix(matrix, ChooseSortStrategy(), AscendingDirection());
+matrix = matrix.SortMatrix(ChooseSortStrategy(), AscendingDirection());
 
 Console.WriteLine();
 
 Matrixprint(matrix);
 
 // Lambda test
-matrix = MatrixSort.SortMatrix(matrix, (int[] rowA, int[] rowB) => rowA[3] > rowB[0], AscendingDirection());
+matrix = matrix.SortMatrix((int[] rowA, int[] rowB) => rowA[3] > rowB[0], AscendingDirection());
 
 Console.WriteLine("\nLambda test");
 

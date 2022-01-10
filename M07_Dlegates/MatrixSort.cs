@@ -1,10 +1,10 @@
-﻿namespace M07_Dlegates
+﻿namespace M07_Delegates
 {
     using System;
 
     internal static class MatrixSort
     {
-        internal static int[,] SortMatrix(int[,] inputMatrix, Func<int[], int[], bool> sortStrategy, bool ascendingDirection)
+        internal static int[,] SortMatrix(this int[,] inputMatrix, Func<int[], int[], bool> sortStrategy, bool ascendingDirection)
         {
             var maxN = inputMatrix.GetLength(0) - 1;
             do
