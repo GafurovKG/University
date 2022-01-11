@@ -13,7 +13,7 @@ namespace MyGeneticsTests
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (MyBinarySearch<int>.BinarySearch(array, array[i]) != i)
+                if (MyBinarySearch.BinarySearch(array, array[i]) != i)
                 {
                     Assert.IsTrue(false);
                 }
@@ -29,7 +29,7 @@ namespace MyGeneticsTests
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (MyBinarySearch<int>.BinarySearch(array, array[i]) != i)
+                if (MyBinarySearch.BinarySearch(array, array[i]) != i)
                 {
                     Assert.IsTrue(false);
                 }
@@ -45,7 +45,7 @@ namespace MyGeneticsTests
 
             for (int i = 0; i < array.Length; i++)
             {
-                if (MyBinarySearch<string>.BinarySearch(array, array[i]) != i)
+                if (MyBinarySearch.BinarySearch(array, array[i]) != i)
                 {
                     Assert.IsTrue(false);
                 }

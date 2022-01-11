@@ -3,8 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public static class MyBinarySearch<T>
-        where T : IComparable<T>
+    public static class MyBinarySearch
     {
         public static int BinarySearch<T1>(IEnumerable<T1> values, T1 searchable)
             where T1 : IComparable<T1>
