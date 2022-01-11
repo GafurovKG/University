@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenetics", "MyGenetics.csproj", "{E841B709-B3E2-4807-A1FD-23A36CC84899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGeneticsTests", "..\MyBinarySearchTests\MyGeneticsTests.csproj", "{A071A3BC-2335-4183-AD0B-72F0A7CD87FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E841B709-B3E2-4807-A1FD-23A36CC84899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E841B709-B3E2-4807-A1FD-23A36CC84899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E841B709-B3E2-4807-A1FD-23A36CC84899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E841B709-B3E2-4807-A1FD-23A36CC84899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A071A3BC-2335-4183-AD0B-72F0A7CD87FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A071A3BC-2335-4183-AD0B-72F0A7CD87FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A071A3BC-2335-4183-AD0B-72F0A7CD87FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A071A3BC-2335-4183-AD0B-72F0A7CD87FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABB79B8F-3CA2-4719-8376-24314FAE0CB4}
+	EndGlobalSection
+EndGlobal
