@@ -16,4 +16,8 @@
     <None Remove="MatrixSortTests\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="CountDown\CountDown.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-namespace MatrixSortTests
+namespace M07_DelegatesTests
 {
     using M07_Delegates;
     using NUnit.Framework;
