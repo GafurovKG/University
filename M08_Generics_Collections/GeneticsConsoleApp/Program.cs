@@ -34,3 +34,8 @@ foreach (var item in NewStack)
 {
     Console.WriteLine(item);
 }
+
+// Task "RPN Calculator"
+var str = "5 1 2 + 4 * + 3 -";
+
+Console.WriteLine($"\nРезультат вычисления {str}: {Calculator.PolishCalulate(str)}");
