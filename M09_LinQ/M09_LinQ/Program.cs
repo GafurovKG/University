@@ -1,19 +1,43 @@
 ﻿using System.Text.Json;
 using M09_LinQ;
 
+var commandLine = "-minmark 3 -maxmark 5 -datefrom 02/03/2000 -dateto 28/03/2000 -sort name dsc";
+
 var file = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Students.json"));
 
-var Student = JsonSerializer.Deserialize<List<Student>>(file);
+var students = new List<Student>();
+
+try
+{
+    students = JsonSerializer.Deserialize<List<Student>>(file);
+}
+catch (JsonException e)
+{
+    Console.WriteLine("База не валидная" + e.Message);
+    return;
+}
+
+if (students == null)
+{
+    Console.WriteLine("База не загружена");
+    return;
+}
 
 var test = "";
-var name = "";
-var minmark = 0;
-var maxmark = 5;
-var datefrom = new DateOnly(1, 1, 1);
-var dateto = new DateOnly(3000, 12, 31);
-var sort = "";
 
-var commandLine = "-minmark 3 -maxmark 5 -datefrom 02/03/2000 -dateto 28/03/2000 -sort date asc";
+var name = "";
+
+var minmark = 0;
+
+var maxmark = 5;
+
+var datefrom = new DateOnly(1, 1, 1);
+
+var dateto = new DateOnly(3000, 12, 31);
+
+var sort = "Data";
+
+var sortASC = true;
 
 var parametrs = commandLine.Split('-').Where(x => x != "").ToDictionary(x => x.Split(' ')[0], x => x.Substring(x.IndexOf(' ')).Trim());
 
@@ -40,50 +64,38 @@ foreach (var item in parametrs)
             dateto = DateOnly.Parse(item.Value);
             break;
         case "sort":
-            sort = item.Value;
+            var temp = item.Value.Split(' ')[0];
+            sort = Convert.ToString(temp[0]).ToUpper() + temp.Substring(1, temp.Length - 1);
+            if (item.Value.Contains("dsc"))
+            {
+                sortASC = false;
+            }
+
             break;
         default:
+            Console.WriteLine($"Введен неизвестный параметр: -{item.Key} {item.Value}");
             break;
     }
 }
 
-var reqest = Student
+var reqest = students
     .Where(x => x.Name.Contains(name))
     .Where(x => x.Test.Contains(test))
     .Where(x => x.Score <= maxmark && x.Score >= minmark)
-    .Where(x => x.testDate <= dateto && x.testDate >= datefrom);
+    .Where(x => x.Date <= dateto && x.Date >= datefrom);
 
-switch (sort)
+var propertyInfo = typeof(Student).GetProperty(sort);
+
+if (sortASC)
 {
-    case "name asc":
-        reqest = reqest.OrderBy(x => x.Name).ToList();
-        break;
-    case "name dsc":
-        reqest = reqest.OrderByDescending(x => x.Name).ToList();
-        break;
-    case "test asc":
-        reqest = reqest.OrderBy(x => x.Test).ToList();
-        break;
-    case "test dsc":
-        reqest = reqest.OrderByDescending(x => x.Test).ToList();
-        break;
-    case "score asc":
-        reqest = reqest.OrderBy(x => x.Score).ToList();
-        break;
-    case "score dsc":
-        reqest = reqest.OrderByDescending(x => x.Score).ToList();
-        break;
-    case "date asc":
-        reqest = reqest.OrderBy(x => x.testDate).ToList();
-        break;
-    case "date dsc":
-        reqest = reqest.OrderByDescending(x => x.testDate).ToList();
-        break;
-    default:
-        break;
+    reqest = reqest.OrderBy(x => propertyInfo?.GetValue(x, null));
+}
+else
+{
+    reqest = reqest.OrderByDescending(x => propertyInfo?.GetValue(x, null));
 }
 
 foreach (var item in reqest)
 {
-    Console.WriteLine($"{item.Name} - {item.Test} - {item.Score} - {item.testDate}");
+    Console.WriteLine($"{item.Name} - {item.Test} - {item.Score} - {item.Date}");
 }
