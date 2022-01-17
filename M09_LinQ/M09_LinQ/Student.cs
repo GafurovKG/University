@@ -4,25 +4,56 @@
 
     internal class Student
     {
-        [JsonPropertyName ("name")]
-        public string Name { get; set; }
+        public Student()
+        {
+            _name = "name field is absent";
+            _test = "test field is absent";
+        }
+
+        private string _name;
+        private string _test;
+
+        [JsonPropertyName("name")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value == string.Empty ? "empty name" : value;
+            }
+        }
 
         [JsonPropertyName("test")]
-        public string Test { get; set; }
+        public string Test
+        {
+            get
+            {
+                return _test;
+            }
 
-        public DateOnly testDate;
+            set
+            {
+                _test = value == string.Empty ? "empty test" : value;
+            }
+        }
+
+        public DateOnly Date { get; set; }
 
         [JsonPropertyName("testDate")]
         public string TestDateString
         {
             get
             {
-                return testDate.ToString();
+                return Date.ToString();
             }
 
             set
             {
-                testDate = DateOnly.Parse(value);
+                Date = DateOnly.Parse(value);
             }
         }
 
