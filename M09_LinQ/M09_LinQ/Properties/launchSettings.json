@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "M09_LinQ": {
+      "commandName": "Project",
+      "commandLineArgs": "\"-minmark 3 -maxmark 5 -datefrom 02/03/2000 -dateto 28/03/2000 -sort name\""
+    }
+  }
+}
