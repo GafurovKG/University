@@ -1,12 +1,14 @@
 ﻿namespace Domain
 {
     using System.Collections.Generic;
-    public interface IStudentsService
+    using Domain.Models;
+
+    public interface IStudentsService<TEntity> where TEntity : class
     {
-        Student? Get(int id);
-        IReadOnlyCollection<Student> GetAll();
-        int New(Student student);
-        int Edit(Student student);
+        TEntity? Get(int id);
+        IReadOnlyCollection<TEntity> GetAll();
+        int New(TEntity student);
+        void Edit(TEntity student);
         void Delete(int id);
     }
 }

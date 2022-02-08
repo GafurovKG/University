@@ -1,6 +1,7 @@
 ﻿namespace DataAccess
 {
     using Domain;
+    using Domain.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -14,8 +15,10 @@
 
             return services
                 .AddAutoMapper(typeof(MapperProfile))
+                .AddAutoMapper(typeof(MapperProfileLecor))
                 .AddDbContext<StudentDbContext>(options => options.UseNpgsql(connectionString))
-                .AddScoped<IStudentsRepository, StudentsRepository>();
+                .AddScoped<IStudentsRepository<Student>, StudentsRepository<Student>>()
+                .AddScoped<IStudentsRepository<Lector>, StudentsRepository<Lector>>();
         }
     }
 }

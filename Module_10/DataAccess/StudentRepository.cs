@@ -4,7 +4,7 @@
     using Domain;
     using Microsoft.EntityFrameworkCore;
 
-    internal class StudentsRepository : IStudentsRepository
+    internal class StudentsRepository<TEntity> : IStudentsRepository<TEntity> where TEntity : class
     {
         private readonly StudentDbContext context;
         private readonly IMapper mapper;
@@ -15,40 +15,41 @@
             this.mapper = mapper;
         }
 
-        public IEnumerable<Student> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
-            var studentDb = context.Students.ToList();
-            return mapper.Map<IReadOnlyCollection<Student>>(studentDb);
+            var studentDb = context.Set<TEntity>().ToList();
+            return mapper.Map<IReadOnlyCollection<TEntity>>(studentDb);
         }
 
-        public Student? Get(int id)
+        public TEntity? Get(int id)
         {
-            var studentDb = context.Students.FirstOrDefault(x => x.Id == id);
-            return mapper.Map<Student?>(studentDb);
+            var studentDb = context.Set<TEntity>().Find(id);
+            return mapper.Map<TEntity?>(studentDb);
         }
 
-        public int New(Student student)
+        public int New(TEntity student)
         {
-            var studentDb = mapper.Map<StudentDb>(student);
-            var result = context.Students.Add(studentDb);
+            var studentDb = mapper.Map<TEntity>(student);
+            var result = context.Set<TEntity>().Add(studentDb);
             context.SaveChanges();
-            return result.Entity.Id;
+            return 1000;
+            //return result.Entity.Id;
         }
 
-        public void Edit(Student student)
+        public void Edit(TEntity student)
         {
-            if (context.Students.Find(student.Id) is StudentDb studentInDb)
-            {
-                studentInDb.Name = student.Name;
-                studentInDb.Email = student.Email;
-                context.Entry(studentInDb).State = EntityState.Modified;
+            //if (context.Students.Find(student.Id) is StudentDb studentInDb)
+            //{
+                //studentInDb.Name = student.Name;
+                //studentInDb.Email = student.Email;
+                context.Entry(student).State = EntityState.Modified;
                 context.SaveChanges();
-            }
+            //}
         }
 
         public void Delete(int id)
         {
-            var studentToDelete = context.Students.Find(id);
+            var studentToDelete = context.Set<TEntity>().Find(id);
             context.Entry(studentToDelete).State = EntityState.Deleted;
             context.SaveChanges();
         }

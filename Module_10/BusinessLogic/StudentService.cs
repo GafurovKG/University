@@ -1,12 +1,13 @@
 ﻿using Domain;
+using Domain.Models;
 
 namespace BusinessLogic
 {
-    internal class StudentsService : IStudentsService
+    internal class StudentsService<TEntity> : IStudentsService<TEntity> where TEntity : class
     {
-        private readonly IStudentsRepository studentsRepository;
+        private readonly IStudentsRepository<TEntity> studentsRepository;
 
-        public StudentsService(IStudentsRepository studentsRepository)
+        public StudentsService(IStudentsRepository<TEntity> studentsRepository)
         {
             this.studentsRepository = studentsRepository;
         }
@@ -16,23 +17,22 @@ namespace BusinessLogic
             studentsRepository.Delete(id);
         }
 
-        public int Edit(Student student)
+        public void Edit(TEntity student)
         {
             studentsRepository.Edit(student);
-            return student.Id;
         }
 
-        public Student? Get(int id)
+        public TEntity? Get(int id)
         {
             return studentsRepository.Get(id);
         }
 
-        public IReadOnlyCollection<Student> GetAll()
+        public IReadOnlyCollection<TEntity> GetAll()
         {
             return studentsRepository.GetAll().ToArray();
         }
 
-        public int New(Student student)
+        public int New(TEntity student)
         {
             return studentsRepository.New(student);
         }

@@ -1,12 +1,13 @@
 ﻿namespace Domain
 {
     using System.Collections.Generic;
-    public interface IStudentsRepository
+    public interface IStudentsRepository<TEntity>
+        where TEntity : class
     {
-        Student? Get(int id);
-        IEnumerable<Student> GetAll();
-        int New(Student student);
-        void Edit(Student student);
+        TEntity? Get(int id);
+        IEnumerable<TEntity> GetAll();
+        int New(TEntity student);
+        void Edit(TEntity student);
         void Delete(int id);
     }
 }
