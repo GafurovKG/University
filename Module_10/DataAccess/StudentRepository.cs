@@ -1,56 +1,50 @@
 ﻿namespace DataAccess
 {
     using AutoMapper;
-    using Domain;
     using Microsoft.EntityFrameworkCore;
 
-    internal class StudentsRepository<TEntity> : IStudentsRepository<TEntity> where TEntity : class
+    internal class UniverRepository<TEntity> : IUniverRepository<TEntity>
+        where TEntity : class, IIdPrpperty
     {
-        private readonly StudentDbContext context;
+        private readonly UniverDbContext context;
         private readonly IMapper mapper;
 
-        public StudentsRepository(StudentDbContext studentContext, IMapper mapper)
+        public UniverRepository(UniverDbContext UniverContext, IMapper mapper)
         {
-            context = studentContext;
+            context = UniverContext;
             this.mapper = mapper;
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            var studentDb = context.Set<TEntity>().ToList();
-            return mapper.Map<IReadOnlyCollection<TEntity>>(studentDb);
+            var db = context.Set<TEntity>().ToList();
+            return mapper.Map<IReadOnlyCollection<TEntity>>(db);
         }
 
         public TEntity? Get(int id)
         {
-            var studentDb = context.Set<TEntity>().Find(id);
-            return mapper.Map<TEntity?>(studentDb);
+            var db = context.Set<TEntity>().Find(id);
+            return mapper.Map<TEntity?>(db);
         }
 
-        public int New(TEntity student)
+        public int New(TEntity entity)
         {
-            var studentDb = mapper.Map<TEntity>(student);
-            var result = context.Set<TEntity>().Add(studentDb);
+            var dbEntity = mapper.Map<TEntity>(entity);
+            var result = context.Set<TEntity>().Add(dbEntity);
             context.SaveChanges();
-            return 1000;
-            //return result.Entity.Id;
+            return result.Entity.Id;
         }
 
-        public void Edit(TEntity student)
+        public void Edit(TEntity entity)
         {
-            //if (context.Students.Find(student.Id) is StudentDb studentInDb)
-            //{
-                //studentInDb.Name = student.Name;
-                //studentInDb.Email = student.Email;
-                context.Entry(student).State = EntityState.Modified;
+                context.Entry(entity).State = EntityState.Modified;
                 context.SaveChanges();
-            //}
         }
 
         public void Delete(int id)
         {
-            var studentToDelete = context.Set<TEntity>().Find(id);
-            context.Entry(studentToDelete).State = EntityState.Deleted;
+            var entityToDelete = context.Set<TEntity>().Find(id);
+            context.Entry(entityToDelete).State = EntityState.Deleted;
             context.SaveChanges();
         }
     }

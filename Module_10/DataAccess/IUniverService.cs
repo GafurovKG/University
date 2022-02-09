@@ -1,9 +1,8 @@
-﻿namespace Domain
+﻿namespace DataAccess
 {
     using System.Collections.Generic;
-    using Domain.Models;
 
-    public interface IStudentsService<TEntity> where TEntity : class
+    public interface IUniverService<TEntity> where TEntity : class
     {
         TEntity? Get(int id);
         IReadOnlyCollection<TEntity> GetAll();

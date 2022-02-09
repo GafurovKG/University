@@ -1,7 +1,6 @@
 ﻿namespace DataAccess
 {
-    using Domain;
-    using Domain.Models;
+    using DataAccess.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -9,16 +8,15 @@
     {
         public static IServiceCollection AddDataAccess(this IServiceCollection services, string connectionString)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<StudentDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<UniverDbContext>();
             optionsBuilder.UseNpgsql(connectionString);
-            DefaultDB.CreateDafaultDB(new StudentDbContext(optionsBuilder.Options));
+            DefaultDB.CreateDafaultDB(new UniverDbContext(optionsBuilder.Options));
 
             return services
                 .AddAutoMapper(typeof(MapperProfile))
-                .AddAutoMapper(typeof(MapperProfileLecor))
-                .AddDbContext<StudentDbContext>(options => options.UseNpgsql(connectionString))
-                .AddScoped<IStudentsRepository<Student>, StudentsRepository<Student>>()
-                .AddScoped<IStudentsRepository<Lector>, StudentsRepository<Lector>>();
+                .AddDbContext<UniverDbContext>(options => options.UseNpgsql(connectionString))
+                .AddScoped<IUniverRepository<StudentDb>, UniverRepository<StudentDb>>()
+                .AddScoped<IUniverRepository<LectorDb>, UniverRepository<LectorDb>>();
         }
     }
 }

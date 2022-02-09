@@ -1,9 +1,10 @@
-﻿namespace DataAccess
+﻿namespace DataAccess.Models
 {
-    internal record StudentDb
+    public record StudentDb : IIdPrpperty
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string Tel { get; set; }
     }
 }

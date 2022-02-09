@@ -1,13 +1,13 @@
-﻿using Domain;
-using Domain.Models;
+﻿using DataAccess;
 
 namespace BusinessLogic
 {
-    internal class StudentsService<TEntity> : IStudentsService<TEntity> where TEntity : class
+    internal class StudentsService<TEntity> : IUniverService<TEntity>
+        where TEntity : class
     {
-        private readonly IStudentsRepository<TEntity> studentsRepository;
+        private readonly IUniverRepository<TEntity> studentsRepository;
 
-        public StudentsService(IStudentsRepository<TEntity> studentsRepository)
+        public StudentsService(IUniverRepository<TEntity> studentsRepository)
         {
             this.studentsRepository = studentsRepository;
         }
