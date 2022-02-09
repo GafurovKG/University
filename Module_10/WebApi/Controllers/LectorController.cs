@@ -1,55 +1,55 @@
 ﻿namespace WebApi.Controllers
 {
-    using Domain;
-    using Domain.Models;
+    using DataAccess;
+    using DataAccess.Models;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
     [Route("/api/lector")]
     public class LectorController : ControllerBase
     {
-        private readonly IStudentsService<Lector> studentService;
+        private readonly IUniverService<LectorDb> lectorService;
 
-        public LectorController(IStudentsService<Lector> studentService)
+        public LectorController(IUniverService<LectorDb> univerService)
         {
-            this.studentService = studentService;
+            this.lectorService = univerService;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Lector> GetStudent(int id)
+        public ActionResult<LectorDb> GetLector(int id)
         {
-            return studentService.Get(id) switch
+            return lectorService.Get(id) switch
             {
                 null => NotFound(),
-                var student => student
+                var lector => lector
             };
         }
 
         [HttpGet]
-        public ActionResult<IReadOnlyCollection<Lector>> GetStudents()
+        public ActionResult<IReadOnlyCollection<LectorDb>> GetLectors()
         {
-            return studentService.GetAll().ToArray();
+            return lectorService.GetAll().ToArray();
         }
 
         [HttpPost]
-        public ActionResult AddStudent(Lector student)
+        public ActionResult AddLector(LectorDb lector)
         {
-            var newStudentId = studentService.New(student with { Id = 0 });
-            return Ok($"api/lector/{newStudentId}\n" +
-                $"{studentService.Get(newStudentId)}");
+            var newLectorId = lectorService.New(lector with { Id = 0 });
+            return Ok($"api/lector/{newLectorId}\n" +
+                $"{lectorService.Get(newLectorId)}");
         }
 
         [HttpPut("{id}")]
-        public ActionResult<string> UpdateStudent(int id, Lector student)
+        public ActionResult<string> UpdateLector(int id, LectorDb lector)
         {
-            studentService.Edit(student with { Id = id });
+            lectorService.Edit(lector with { Id = id });
             return Ok($"api/lector/{id}");
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteStudent(int id)
+        public ActionResult DeleteLector(int id)
         {
-            studentService.Delete(id);
+            lectorService.Delete(id);
             return Ok();
         }
     }

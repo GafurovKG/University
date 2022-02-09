@@ -36,6 +36,7 @@
                 _logger.LogError(ex, MessageFormat, httpContext.Request.Method, GetPath(httpContext), statusCode);
             }
         }
+
         private string GetPath(HttpContext httpContext)
         {
             return httpContext.Features.Get<IHttpRequestFeature>()?.RawTarget ?? httpContext.Request.Path.ToString();

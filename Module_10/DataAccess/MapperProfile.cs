@@ -1,7 +1,7 @@
 ﻿namespace DataAccess
 {
     using AutoMapper;
-    using Domain;
+    using DataAccess.Models;
     using Domain.Models;
 
     internal class MapperProfile : Profile
@@ -10,6 +10,7 @@
         {
             //CreateMap<TEntitySource, TEntityDist>().ReverseMap();
             CreateMap<StudentDb, Student>().ReverseMap();
+            CreateMap<LectorDb, Lector>().ReverseMap();
         }
     }
 }
