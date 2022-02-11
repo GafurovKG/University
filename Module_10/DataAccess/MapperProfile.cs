@@ -8,9 +8,10 @@
     {
         public MapperProfile()
         {
-            //CreateMap<TEntitySource, TEntityDist>().ReverseMap();
             CreateMap<StudentDb, Student>().ReverseMap();
             CreateMap<LectorDb, Lector>().ReverseMap();
+            CreateMap<LectureDb, Lecture>().ReverseMap();
+            CreateMap<HomeWorkDb, HomeWork>().ReverseMap();
         }
     }
 }

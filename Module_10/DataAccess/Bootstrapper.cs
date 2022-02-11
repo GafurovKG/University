@@ -16,7 +16,9 @@
                 .AddAutoMapper(typeof(MapperProfile))
                 .AddDbContext<UniverDbContext>(options => options.UseNpgsql(connectionString))
                 .AddScoped<IUniverRepository<StudentDb>, UniverRepository<StudentDb>>()
-                .AddScoped<IUniverRepository<LectorDb>, UniverRepository<LectorDb>>();
+                .AddScoped<IUniverRepository<LectorDb>, UniverRepository<LectorDb>>()
+                .AddScoped<IUniverRepository<LectureDb>, UniverRepository<LectureDb>>()
+                .AddScoped<IUniverRepository<HomeWorkDb>, UniverRepository<HomeWorkDb>>();
         }
     }
 }
