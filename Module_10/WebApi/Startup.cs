@@ -2,6 +2,10 @@
 {
     using BusinessLogic;
     using DataAccess;
+    using DataAccess.Models;
+    using FluentValidation;
+    using FluentValidation.AspNetCore;
+    using WebApi.Configurations;
 
     public class Startup
     {
@@ -14,12 +18,12 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(MapperProfileUI));
             services.AddControllers();
-
-            services.AddBusinessLogic()
-            .AddDataAccess(Configuration.GetConnectionString("StudentDb"));
-
-            // services.AddEndpointsApiExplorer();
+            services.AddFluentValidation();
+            services.AddTransient<IValidator<StudentDb>, StudentDbValidator>();
+            services.AddBusinessLogic();
+            services.AddDataAccess(Configuration.GetConnectionString("StudentDb"));
             services.AddSwaggerGen();
         }
 

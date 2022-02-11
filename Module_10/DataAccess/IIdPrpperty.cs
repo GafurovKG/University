@@ -1,6 +1,6 @@
 ﻿namespace DataAccess
 {
-    internal interface IIdPrpperty
+    public interface IIdPrpperty
     {
         public int Id { get; set; }
     }

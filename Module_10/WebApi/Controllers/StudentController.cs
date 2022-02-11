@@ -1,48 +1,54 @@
 ﻿namespace WebApi.Controllers
 {
+    using System.Collections.Generic;
+    using AutoMapper;
     using DataAccess;
     using DataAccess.Models;
     using Microsoft.AspNetCore.Mvc;
+    using WebApi.UIModels;
 
     [ApiController]
     [Route("/api/student")]
     public class StudentController : ControllerBase
     {
         private readonly IUniverService<StudentDb> studentService;
+        private readonly IMapper mapper;
 
-        public StudentController(IUniverService<StudentDb> univerService)
+        public StudentController(IUniverService<StudentDb> univerService, IMapper mapper)
         {
             this.studentService = univerService;
+            this.mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<StudentDb> GetStudent(int id)
+        public ActionResult<StudentUI> GetStudent(int id)
         {
             return studentService.Get(id) switch
             {
                 null => NotFound(),
-                var student => student
+                var student => mapper.Map<StudentUI>(student)
             };
         }
 
         [HttpGet]
-        public ActionResult<IReadOnlyCollection<StudentDb>> GetStudents()
+        public ActionResult<IReadOnlyCollection<StudentUI>> GetStudents()
         {
-            return studentService.GetAll().ToArray();
+            var students = studentService.GetAll().ToArray();
+            return mapper.Map<IReadOnlyCollection<StudentUI>>(students).ToList();
         }
 
         [HttpPost]
-        public ActionResult AddStudent(StudentDb student)
+        public ActionResult AddStudent(StudentUIPost student)
         {
-            var newStudentId = studentService.New(student with { Id = 0 });
+            var newStudentId = studentService.New(mapper.Map<StudentDb>(student));
             return Ok($"api/student/{newStudentId}\n" +
                 $"{studentService.Get(newStudentId)}");
         }
 
         [HttpPut("{id}")]
-        public ActionResult<string> UpdateStudent(int id, StudentDb student)
+        public ActionResult<string> UpdateStudent(int id, StudentUIPost student)
         {
-            studentService.Edit(student with { Id = id });
+            studentService.Edit(mapper.Map<StudentDb>(student) with { Id = id });
             return Ok($"api/student/{id}");
         }
 
