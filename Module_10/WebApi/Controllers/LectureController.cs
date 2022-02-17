@@ -20,33 +20,33 @@
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LectureDb> GetLecture(int id)
+        public ActionResult<LectureUI> GetLecture(int id)
         {
             return lectureService.Get(id) switch
             {
                 null => NotFound(),
-                var lecture => lecture
+                var lecture => mapper.Map<LectureUI>(lecture)
             };
         }
 
         [HttpGet]
-        public ActionResult<IReadOnlyCollection<LectureDb>> GetLecture()
+        public ActionResult<IReadOnlyCollection<LectureUI>> GetLecture()
         {
-            return lectureService.GetAll().ToArray();
+             var result = lectureService.GetAll().ToArray();
+             return mapper.Map<IReadOnlyCollection<LectureUI>>(result).ToList();
         }
 
         [HttpPost]
-        public ActionResult AddStudent(LectureUIPost lecture)
+        public ActionResult<LectureUI> AddStudent(LectureUIPost lecture)
         {
-            var newLectureId = lectureService.New(mapper.Map<LectureDb>(lecture) with { Id = 0 });
-            return Ok($"api/lecture/{newLectureId}\n" +
-                $"{lectureService.Get(newLectureId)}");
+            var newLectureId = lectureService.New(mapper.Map<LectureDb>(lecture));
+            return Ok($"api/lecture/{newLectureId}");
         }
 
         [HttpPut("{id}")]
-        public ActionResult<string> UpdateLecture(int id, LectureDb lecure)
+        public ActionResult<string> UpdateLecture(int id, LectureUIPost lecture)
         {
-            lectureService.Edit(lecure with { Id = id });
+            lectureService.Edit(mapper.Map<LectureDb>(lecture) with { Id = id });
             return Ok($"api/lecture/{id}");
         }
 

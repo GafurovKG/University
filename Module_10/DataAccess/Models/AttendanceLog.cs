@@ -6,6 +6,7 @@
         public StudentDb? Student { get; set;}
         public int LectureId { get; set; }
         public LectureDb? Lecture { get; set; }
-        public int? Mark { get; set; }
+        public int Mark { get; set; }
+        public bool Visited { get; set; }
     }
 }

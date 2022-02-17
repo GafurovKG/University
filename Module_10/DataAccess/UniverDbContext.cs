@@ -17,22 +17,15 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder
-            //    .Entity<LectureDb>()
-            //    .HasOne(u => u.HomeWork)
-            //    .WithOne(p => p.Lecture)
-            //    .HasForeignKey<HomeWorkDb>(p => p.LectureDbId);
-
             modelBuilder.Entity<LectureDb>()
-                .HasOne(u => u.HomeWork).WithOne(p => p.Lecture)
-                .HasForeignKey<HomeWorkDb>(up => up.Id).IsRequired();
-            modelBuilder.Entity<LectureDb>().ToTable("LecturesAndHomeWorks");
-            modelBuilder.Entity<HomeWorkDb>().ToTable("LecturesAndHomeWorks");
+                .HasOne(l => l.HomeWork).WithOne(hw => hw.Lecture)
+                .HasForeignKey<HomeWorkDb>(hw => hw.LectureId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder
             .Entity<LectureDb>()
-            .HasMany(c => c.VisitedStudents)
-            .WithMany(s => s.VisitedLectures)
+            .HasMany(s => s.VisitedStudents)
+            .WithMany(l => l.VisitedLectures)
             .UsingEntity<AttendanceLog>(
                j => j
                 .HasOne(pt => pt.Student)
@@ -44,8 +37,11 @@
                 .HasForeignKey(pt => pt.LectureId),
                j =>
             {
-                j.Property(pt => pt.Mark).HasDefaultValue(null);
+                j.Property(pt => pt.Mark).HasDefaultValue(0);
                 j.HasKey(t => new { t.LectureId, t.StudentId });
+                j.ToTable("AttendanceLog");
+                j.Property(pt => pt.Visited).HasDefaultValue(false);
+                j.HasKey(t => new {t.LectureId, t.StudentId });
                 j.ToTable("AttendanceLog");
             });
 

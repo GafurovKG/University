@@ -1,48 +1,52 @@
 ﻿namespace WebApi.Controllers
 {
+    using AutoMapper;
     using DataAccess;
     using DataAccess.Models;
     using Microsoft.AspNetCore.Mvc;
+    using WebApi.UIModels;
 
     [ApiController]
     [Route("/api/lector")]
     public class LectorController : ControllerBase
     {
         private readonly IUniverService<LectorDb> lectorService;
+        private readonly IMapper mapper;
 
-        public LectorController(IUniverService<LectorDb> univerService)
+        public LectorController(IUniverService<LectorDb> univerService, IMapper mapper)
         {
             this.lectorService = univerService;
+            this.mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LectorDb> GetLector(int id)
+        public ActionResult<LectorUI> GetLector(int id)
         {
             return lectorService.Get(id) switch
             {
                 null => NotFound(),
-                var lector => lector
+                var lector => mapper.Map<LectorUI>(lector)
             };
         }
 
         [HttpGet]
-        public ActionResult<IReadOnlyCollection<LectorDb>> GetLectors()
+        public ActionResult<IReadOnlyCollection<LectorUI>> GetLectors()
         {
-            return lectorService.GetAll().ToArray();
+            var result = lectorService.GetAll().ToArray();
+            return mapper.Map<IReadOnlyCollection<LectorUI>>(result).ToList();
         }
 
         [HttpPost]
-        public ActionResult AddLector(LectorDb lector)
+        public ActionResult AddLector(LectorUIPost lector)
         {
-            var newLectorId = lectorService.New(lector with { Id = 0 });
-            return Ok($"api/lector/{newLectorId}\n" +
-                $"{lectorService.Get(newLectorId)}");
+            var newLectorId = lectorService.New(mapper.Map<LectorDb>(lector));
+            return Ok($"api/lector/{newLectorId}");
         }
 
         [HttpPut("{id}")]
-        public ActionResult<string> UpdateLector(int id, LectorDb lector)
+        public ActionResult<string> UpdateLector(int id, LectorUIPost lector)
         {
-            lectorService.Edit(lector with { Id = id });
+            lectorService.Edit(mapper.Map<LectorDb>(lector) with { Id = id });
             return Ok($"api/lector/{id}");
         }
 

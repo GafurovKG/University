@@ -1,48 +1,54 @@
 ﻿namespace WebApi.Controllers
 {
+    using AutoMapper;
     using DataAccess;
     using DataAccess.Models;
     using Microsoft.AspNetCore.Mvc;
+    using WebApi.UIModels;
 
     [ApiController]
     [Route("/api/homework")]
     public class HomeWorkController : ControllerBase
     {
         private readonly IUniverService<HomeWorkDb> homeWorkService;
+        private readonly IUniverLinkService linkService;
+        private readonly IMapper mapper;
 
-        public HomeWorkController(IUniverService<HomeWorkDb> univerService)
+        public HomeWorkController(IUniverService<HomeWorkDb> univerService, IUniverLinkService linkService, IMapper mapper)
         {
             this.homeWorkService = univerService;
+            this.linkService = linkService;
+            this.mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<HomeWorkDb> GetHomeWork(int id)
+        public ActionResult<HomeWorkUI> GetHomeWork(int id)
         {
             return homeWorkService.Get(id) switch
             {
                 null => NotFound(),
-                var homework => homework
+                var homework => mapper.Map<HomeWorkUI>(homework)
             };
         }
 
         [HttpGet]
-        public ActionResult<IReadOnlyCollection<HomeWorkDb>> GetHomeWorks()
+        public ActionResult<IReadOnlyCollection<HomeWorkUI>> GetHomeWorks()
         {
-            return homeWorkService.GetAll().ToArray();
+            var result = homeWorkService.GetAll().ToArray();
+            return mapper.Map<IReadOnlyCollection<HomeWorkUI>>(result).ToList();
         }
 
-        [HttpPost]
-        public ActionResult AddHomeWork(HomeWorkDb homeWork)
+        [HttpPost("{lectureid}")]
+        public ActionResult AddHomeWork(int lectureid, HomeWorkUIPost homeWork)
         {
-            var newHomeWorkId = homeWorkService.New(homeWork with { Id = 0 });
-            return Ok($"api/homework/{newHomeWorkId}\n" +
-                $"{homeWorkService.Get(newHomeWorkId)}");
+            var newHomeWorkId = linkService.NewHW(lectureid, mapper.Map<HomeWorkDb>(homeWork));
+            return Ok($"api/homework/{newHomeWorkId}");
         }
 
         [HttpPut("{id}")]
-        public ActionResult<string> UpdatenewHomeWorkId(int id, HomeWorkDb homeWork)
+        public ActionResult<string> EditHomeWork(int id, HomeWorkUIPost homeWork)
         {
-            homeWorkService.Edit(homeWork with { Id = id });
+            linkService.EditHW(mapper.Map<HomeWorkDb>(homeWork) with { Id = id });
             return Ok($"api/homework/{id}");
         }
 

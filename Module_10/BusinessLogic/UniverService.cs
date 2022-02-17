@@ -17,9 +17,9 @@ namespace BusinessLogic
             univerRepository.Delete(id);
         }
 
-        public void Edit(TEntity student)
+        public void Edit(TEntity entity)
         {
-            univerRepository.Edit(student);
+            univerRepository.Edit(entity);
         }
 
         public TEntity? Get(int id)
@@ -32,9 +32,9 @@ namespace BusinessLogic
             return univerRepository.GetAll().ToArray();
         }
 
-        public int New(TEntity student)
+        public int New(TEntity entity)
         {
-            return univerRepository.New(student);
+            return univerRepository.New(entity);
         }
     }
 }

@@ -33,8 +33,8 @@
         [HttpGet]
         public ActionResult<IReadOnlyCollection<StudentUI>> GetStudents()
         {
-            var students = studentService.GetAll().ToArray();
-            return mapper.Map<IReadOnlyCollection<StudentUI>>(students).ToList();
+            var result = studentService.GetAll().ToArray();
+            return mapper.Map<IReadOnlyCollection<StudentUI>>(result).ToList();
         }
 
         [HttpPost]

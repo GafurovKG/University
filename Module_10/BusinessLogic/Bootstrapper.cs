@@ -12,7 +12,8 @@
                 .AddScoped<IUniverService<StudentDb>, UniverService<StudentDb>>()
                 .AddScoped<IUniverService<LectorDb>, UniverService<LectorDb>>()
                 .AddScoped<IUniverService<LectureDb>, UniverService<LectureDb>>()
-                .AddScoped<IUniverService<HomeWorkDb>, UniverService<HomeWorkDb>>();
+                .AddScoped<IUniverService<HomeWorkDb>, UniverService<HomeWorkDb>>()
+                .AddScoped<IUniverLinkService, UniverLinkService>();
         }
     }
 }
