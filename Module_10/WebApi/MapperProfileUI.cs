@@ -16,10 +16,9 @@
             CreateMap<HomeWorkUIPost, HomeWorkDb>().ReverseMap();
             CreateMap<LectorUI, LectorDb>().ReverseMap();
             CreateMap<LectorUIPost, LectorDb>().ReverseMap();
-            CreateMap<ReportLogUI, AttendanceLog>()
-                .ForPath(x => x.Student.Name, config => config.MapFrom(y => y.StudentName))
-                .ForPath(x => x.Lecture.LectureTheme, config => config.MapFrom(y => y.LectureTheme))
-                .ReverseMap();
+            CreateMap<AttendanceLog, ReportLogUI>()
+                .ForMember(x => x.StudentName, config => config.MapFrom(y => y.Student.Name))
+                .ForMember(x => x.LectureTheme, config => config.MapFrom(y => y.Lecture.LectureTheme));
         }
     }
 }

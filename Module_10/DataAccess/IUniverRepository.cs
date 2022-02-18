@@ -6,7 +6,7 @@
     {
         TEntity? Get(int id);
         IEnumerable<TEntity> GetAll();
-        IEnumerable<TEntity> GetSome(int[] ids);
+        IEnumerable<TEntity> GetSeveral(int[] ids);
         int New(TEntity student);
         void Edit(TEntity student);
         void Delete(int id);

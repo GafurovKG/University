@@ -20,10 +20,10 @@
         }
 
         [HttpGet]
-        public ActionResult<IReadOnlyCollection<AttendanceLog>> GetReport(string paramstring)
+        public ActionResult<IEnumerable<ReportLogUI>> GetReport(string paramstring)
         {
             var reuslt = linkService.GetReport(paramstring);
-            return reuslt.ToList();
+            return mapper.Map<IReadOnlyCollection<ReportLogUI>>(reuslt).ToList();
         }
     }
 }

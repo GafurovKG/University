@@ -18,13 +18,13 @@
         public IEnumerable<TEntity> GetAll()
         {
             var db = context.Set<TEntity>().ToList();
-            return mapper.Map<IReadOnlyCollection<TEntity>>(db);
+            return mapper.Map<IEnumerable<TEntity>>(db);
         }
 
-        public IEnumerable<TEntity> GetSome(int[] ids)
+        public IEnumerable<TEntity> GetSeveral(int[] ids)
         {
-            var db = context.Set<TEntity>().Find(ids);
-            return mapper.Map<IReadOnlyCollection<TEntity>>(db);
+            var db = context.Set<TEntity>().Where(x => x.Id.Equals(ids));
+            return mapper.Map<IEnumerable<TEntity>>(db);
         }
 
         public TEntity? Get(int id)

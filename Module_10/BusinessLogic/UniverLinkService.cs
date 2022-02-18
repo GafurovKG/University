@@ -81,7 +81,7 @@ namespace BusinessLogic
             }
 
             var response = attendancelog
-                .Where(x => x.Student.Name.Equals(studentName))
+                .Where(x => x.Student.Name.Contains(studentName))
                 .Where(x => x.Lecture.LectureTheme.Contains(lectureTheme));
 
             var propertyInfo = typeof(AttendanceLog).GetProperty(sort);
@@ -95,7 +95,7 @@ namespace BusinessLogic
                 response = response.OrderByDescending(x => propertyInfo?.GetValue(x, null));
             }
 
-            return response;
+            return response.ToArray();
         }
 
     }
