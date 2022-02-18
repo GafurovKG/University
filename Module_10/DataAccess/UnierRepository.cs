@@ -21,6 +21,12 @@
             return mapper.Map<IReadOnlyCollection<TEntity>>(db);
         }
 
+        public IEnumerable<TEntity> GetSome(int[] ids)
+        {
+            var db = context.Set<TEntity>().Find(ids);
+            return mapper.Map<IReadOnlyCollection<TEntity>>(db);
+        }
+
         public TEntity? Get(int id)
         {
             var db = context.Set<TEntity>().Find(id);

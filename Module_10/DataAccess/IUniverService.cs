@@ -6,6 +6,7 @@
     {
         TEntity? Get(int id);
         IReadOnlyCollection<TEntity> GetAll();
+        IReadOnlyCollection<TEntity> GetSome(int[] ids);
         int New(TEntity student);
         void Edit(TEntity student);
         void Delete(int id);

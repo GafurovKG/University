@@ -37,18 +37,14 @@
                 .HasForeignKey(pt => pt.LectureId),
                j =>
             {
-                j.Property(pt => pt.Mark).HasDefaultValue(0);
+                j.Property(pt => pt.HomeWorkMark).HasDefaultValue(0);
                 j.HasKey(t => new { t.LectureId, t.StudentId });
                 j.ToTable("AttendanceLog");
-                j.Property(pt => pt.Visited).HasDefaultValue(false);
-                j.HasKey(t => new {t.LectureId, t.StudentId });
+                j.HasKey(t => new { t.LectureId, t.StudentId });
                 j.ToTable("AttendanceLog");
             });
 
-            //modelBuilder.Entity<StudentDb>()
-            //    .HasMany(c => c.VisitedLectures)
-            //    .WithMany(s => s.VisitedStudents)
-            //    .UsingEntity(j => j.ToTable("AttendanceLog"));
+
         }
 
         //public UniverDbContext()
