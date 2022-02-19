@@ -5,7 +5,7 @@
         where TEntity : class
     {
         TEntity? Get(int id);
-        IEnumerable<TEntity> GetAll();
+        IReadOnlyCollection<TEntity> GetAll();
         IEnumerable<TEntity> GetSeveral(int[] ids);
         int New(TEntity student);
         void Edit(TEntity student);

@@ -13,8 +13,8 @@
                 .AddScoped<IUniverService<LectorDb>, UniverService<LectorDb>>()
                 .AddScoped<IUniverService<LectureDb>, UniverService<LectureDb>>()
                 .AddScoped<IUniverService<HomeWorkDb>, UniverService<HomeWorkDb>>()
-                .AddScoped<IUniverService<AttendanceLog>, UniverService<AttendanceLog>>()
-                .AddScoped<IUniverLinkService, UniverLinkService>();
+                .AddScoped<IUniverLinkService, UniverLinkService>()
+                .AddScoped<IReportService, RepotrService>();
         }
     }
 }

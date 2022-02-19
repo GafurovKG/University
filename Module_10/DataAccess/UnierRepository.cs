@@ -15,10 +15,10 @@
             this.mapper = mapper;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IReadOnlyCollection<TEntity> GetAll()
         {
             var db = context.Set<TEntity>().ToList();
-            return mapper.Map<IEnumerable<TEntity>>(db);
+            return mapper.Map<IReadOnlyCollection<TEntity>>(db);
         }
 
         public IEnumerable<TEntity> GetSeveral(int[] ids)

@@ -31,6 +31,7 @@ namespace BusinessLogic
         {
             return univerRepository.GetAll().ToArray();
         }
+
         public IReadOnlyCollection<TEntity> GetSome(int[] ids)
         {
             return univerRepository.GetSeveral(ids).ToArray();

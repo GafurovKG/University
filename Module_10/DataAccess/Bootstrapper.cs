@@ -19,7 +19,7 @@
                 .AddScoped<IUniverRepository<LectorDb>, UniverRepository<LectorDb>>()
                 .AddScoped<IUniverRepository<LectureDb>, UniverRepository<LectureDb>>()
                 .AddScoped<IUniverRepository<HomeWorkDb>, UniverRepository<HomeWorkDb>>()
-                .AddScoped<IUniverRepository<AttendanceLog>, UniverRepository<AttendanceLog>>();
+                .AddScoped<IReportRepository, ReportRepository>();
         }
     }
 }

@@ -6,6 +6,5 @@
     {
         int NewHW(int lectureId, HomeWorkDb homeWork);
         void EditHW(HomeWorkDb homeWork);
-        IReadOnlyCollection<AttendanceLog> GetReport(string paramstring);
     }
 }

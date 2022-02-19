@@ -10,19 +10,19 @@
     [Route("/api/reports")]
     public class ReportsController : ControllerBase
     {
-        private readonly IUniverLinkService linkService;
+        private readonly IReportService reportService;
         private readonly IMapper mapper;
 
-        public ReportsController(IUniverLinkService linkService, IMapper mapper)
+        public ReportsController(IReportService reportService, IMapper mapper)
         {
-            this.linkService = linkService;
+            this.reportService = reportService;
             this.mapper = mapper;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ReportLogUI>> GetReport(string paramstring)
         {
-            var reuslt = linkService.GetReport(paramstring);
+            var reuslt = reportService.GetReport(paramstring);
             return mapper.Map<IReadOnlyCollection<ReportLogUI>>(reuslt).ToList();
         }
     }
