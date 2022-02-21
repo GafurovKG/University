@@ -2,7 +2,7 @@
 
 namespace BusinessLogic
 {
-    internal class UniverService<TEntity> : IUniverService<TEntity>
+    public class UniverService<TEntity> : IUniverService<TEntity>
         where TEntity : class
     {
         private readonly IUniverRepository<TEntity> univerRepository;
@@ -30,11 +30,6 @@ namespace BusinessLogic
         public IReadOnlyCollection<TEntity> GetAll()
         {
             return univerRepository.GetAll().ToArray();
-        }
-
-        public IReadOnlyCollection<TEntity> GetSome(int[] ids)
-        {
-            return univerRepository.GetSeveral(ids).ToArray();
         }
 
         public int New(TEntity entity)
