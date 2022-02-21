@@ -19,11 +19,19 @@
             this.mapper = mapper;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<ReportLogUI>> GetReport(string paramstring)
+        [HttpPost]
+        public ActionResult<IEnumerable<ReportLogUI>> GetReport([FromQuery] string[] students, [FromQuery] string[] lectures)
         {
-            var reuslt = reportService.GetReport(paramstring);
-            return mapper.Map<IReadOnlyCollection<ReportLogUI>>(reuslt).ToList();
+
+            var reuslt = reportService.GetReport(students, lectures);
+            return mapper.Map<IEnumerable<ReportLogUI>>(reuslt).ToList();
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<ReportLogUI>> GetFullReport()
+        {
+            var reuslt = reportService.GetReport();
+            return mapper.Map<IEnumerable<ReportLogUI>>(reuslt).ToList();
         }
     }
 }

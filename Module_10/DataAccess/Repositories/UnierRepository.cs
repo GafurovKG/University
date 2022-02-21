@@ -21,12 +21,6 @@
             return mapper.Map<IReadOnlyCollection<TEntity>>(db);
         }
 
-        public IEnumerable<TEntity> GetSeveral(int[] ids)
-        {
-            var db = context.Set<TEntity>().Where(x => x.Id.Equals(ids));
-            return mapper.Map<IEnumerable<TEntity>>(db);
-        }
-
         public TEntity? Get(int id)
         {
             var db = context.Set<TEntity>().Find(id);
