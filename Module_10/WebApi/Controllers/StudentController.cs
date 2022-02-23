@@ -20,7 +20,7 @@
             this.mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+/*        [HttpGet("{id}")]
         public ActionResult<StudentUI> GetStudent(int id)
         {
             return studentService.Get(id) switch
@@ -28,7 +28,7 @@
                 null => NotFound(),
                 var student => mapper.Map<StudentUI>(student)
             };
-        }
+        }*/
 
         [HttpGet]
         public ActionResult<IReadOnlyCollection<StudentUI>> GetStudents()
@@ -37,7 +37,7 @@
             return mapper.Map<IReadOnlyCollection<StudentUI>>(result).ToList();
         }
 
-        [HttpPost]
+/*        [HttpPost]
         public ActionResult AddStudent(StudentUIPost student)
         {
             var newStudentId = studentService.New(mapper.Map<StudentDb>(student));
@@ -57,6 +57,6 @@
         {
             studentService.Delete(id);
             return Ok();
-        }
+        }*/
     }
 }

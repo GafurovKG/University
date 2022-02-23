@@ -21,7 +21,7 @@
             this.mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+/*      [HttpGet("{id}")]
         public ActionResult<HomeWorkUI> GetHomeWork(int id)
         {
             return homeWorkService.Get(id) switch
@@ -29,7 +29,7 @@
                 null => NotFound(),
                 var homework => mapper.Map<HomeWorkUI>(homework)
             };
-        }
+        }*/
 
         [HttpGet]
         public ActionResult<IReadOnlyCollection<HomeWorkUI>> GetHomeWorks()
@@ -38,7 +38,7 @@
             return mapper.Map<IReadOnlyCollection<HomeWorkUI>>(result).ToList();
         }
 
-        [HttpPost("{lectureid}")]
+        [HttpPost("addHWToLecture")]
         public ActionResult AddHomeWork(int lectureid, HomeWorkUIPost homeWork)
         {
             var newHomeWorkId = linkService.NewHW(lectureid, mapper.Map<HomeWorkDb>(homeWork));

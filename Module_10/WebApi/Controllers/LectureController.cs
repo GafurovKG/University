@@ -21,7 +21,7 @@
             this.mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+/*        [HttpGet("{id}")]
         public ActionResult<LectureUI> GetLecture(int id)
         {
             return lectureService.Get(id) switch
@@ -29,7 +29,7 @@
                 null => NotFound(),
                 var lecture => mapper.Map<LectureUI>(lecture)
             };
-        }
+        }*/
 
         [HttpGet]
         public ActionResult<IReadOnlyCollection<LectureUI>> GetLecture()
@@ -45,25 +45,25 @@
             return Ok($"api/lecture/{newLectureId}");
         }
 
-        //[HttpPut("{id}")]
-        //public ActionResult<string> UpdateLecture(int id, LectureUIPost lecture)
-        //{
-        //    lectureService.Edit(mapper.Map<LectureDb>(lecture) with { Id = id });
-        //    return Ok($"api/lecture/{id}");
-        //}
+/*        [HttpPut("{id}")]
+        public ActionResult<string> UpdateLecture(int id, LectureUIPost lecture)
+        {
+            lectureService.Edit(mapper.Map<LectureDb>(lecture) with { Id = id });
+            return Ok($"api/lecture/{id}");
+        }*/
 
-        [HttpPut("{id}")]
+        [HttpPut("lectureIsReaded")]
         public ActionResult<string> ReadLecture(int id, [FromQuery]List<int> students, [FromQuery] List<int> marks)
         {
             var inst = linkService.NewAttendanceRecord(id, students, marks);
             return Ok($"api/lecture/{id}");
         }
 
-        [HttpDelete("{id}")]
+/*        [HttpDelete("{id}")]
         public ActionResult DeleteLecture(int id)
         {
             lectureService.Delete(id);
             return Ok();
-        }
+        }*/
     }
 }

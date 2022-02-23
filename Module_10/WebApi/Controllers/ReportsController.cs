@@ -19,7 +19,7 @@
             this.mapper = mapper;
         }
 
-        [HttpPost]
+        [HttpPost("selectedattendancelog")]
         public ActionResult<IEnumerable<ReportLogUI>> GetReport([FromQuery] string[] students, [FromQuery] string[] lectures)
         {
 
@@ -27,7 +27,7 @@
             return mapper.Map<IEnumerable<ReportLogUI>>(reuslt).ToList();
         }
 
-        [HttpGet]
+        [HttpGet("allattendancelog")]
         public ActionResult<IEnumerable<ReportLogUI>> GetFullReport()
         {
             var reuslt = reportService.GetReport();
