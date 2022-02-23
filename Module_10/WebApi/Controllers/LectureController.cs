@@ -11,10 +11,12 @@
     public class LectureController : ControllerBase
     {
         private readonly IUniverService<LectureDb> lectureService;
+        private readonly IUniverLinkService linkService;
         private readonly IMapper mapper;
 
-        public LectureController(IUniverService<LectureDb> univerService, IMapper mapper)
+        public LectureController(IUniverLinkService linkService, IUniverService<LectureDb> univerService, IMapper mapper)
         {
+            this.linkService = linkService;
             this.lectureService = univerService;
             this.mapper = mapper;
         }
@@ -43,10 +45,17 @@
             return Ok($"api/lecture/{newLectureId}");
         }
 
+        //[HttpPut("{id}")]
+        //public ActionResult<string> UpdateLecture(int id, LectureUIPost lecture)
+        //{
+        //    lectureService.Edit(mapper.Map<LectureDb>(lecture) with { Id = id });
+        //    return Ok($"api/lecture/{id}");
+        //}
+
         [HttpPut("{id}")]
-        public ActionResult<string> UpdateLecture(int id, LectureUIPost lecture)
+        public ActionResult<string> ReadLecture(int id, [FromQuery]List<int> students, [FromQuery] List<int> marks)
         {
-            lectureService.Edit(mapper.Map<LectureDb>(lecture) with { Id = id });
+            var inst = linkService.NewAttendanceRecord(id, students, marks);
             return Ok($"api/lecture/{id}");
         }
 

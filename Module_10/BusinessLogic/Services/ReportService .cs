@@ -6,17 +6,10 @@ namespace BusinessLogic
     internal class RepotrService : IReportService
     {
         private readonly IReportRepository reportRepository;
-        private readonly IUniverRepository<StudentDb> studentRepository;
-        private readonly IUniverRepository<LectureDb> lectureRepository;
 
-        public RepotrService(
-            IReportRepository reportRepository,
-            IUniverRepository<StudentDb> studentRepository,
-            IUniverRepository<LectureDb> lectureRepository)
+        public RepotrService(IReportRepository reportRepository)
         {
             this.reportRepository = reportRepository;
-            this.lectureRepository = lectureRepository;
-            this.studentRepository = studentRepository;
         }
 
         public IEnumerable<AttendanceLog> GetReport(string[] students, string[] lectures)

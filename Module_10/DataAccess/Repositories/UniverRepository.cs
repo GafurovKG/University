@@ -1,5 +1,6 @@
 ﻿namespace DataAccess
 {
+    using System.Collections.Generic;
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,14 @@
             var entityToDelete = context.Set<TEntity>().Find(id);
             context.Entry(entityToDelete).State = EntityState.Deleted;
             context.SaveChanges();
+        }
+
+        public List<TEntity>? GetSeveral(List<int> ids)
+        {
+            var items = context.Set<TEntity>();
+            var response = items.Where(x => ids.Contains(x.Id));
+
+            return response.ToList();
         }
     }
 }

@@ -16,21 +16,14 @@
             context = UniverContext;
             this.mapper = mapper;
         }
-        public int New(AttendanceLog record)
-        {
-            var dbEntity = mapper.Map<AttendanceLog>(record);
-            var result = context.Set<AttendanceLog>().Add(dbEntity);
-            context.SaveChanges();
-            return result.Entity.Id;
-        }
 
         public IEnumerable<AttendanceLog> GetAll()
         {
             var response = context.Students
                             .Include(x => x.AttendanceLog)
                             .ThenInclude(x => x.Lecture)
-                            .SelectMany(x => x.AttendanceLog.DefaultIfEmpty(),
-                            (name, lecture) => new AttendanceLog { Student = name, Lecture = lecture.Lecture })
+                            .SelectMany(x => x.AttendanceLog,
+                             (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                             .ToList();
 
             return mapper.Map<IEnumerable<AttendanceLog>>(response);
@@ -44,8 +37,8 @@
                 .Where(x => list.Contains(x.Name))
                 .Include(x => x.AttendanceLog)
                 .ThenInclude(x => x.Lecture)
-                .SelectMany(x => x.AttendanceLog.DefaultIfEmpty(),
-                (name, lecture) => new AttendanceLog { Student = name, Lecture = lecture.Lecture })
+                .SelectMany(x => x.AttendanceLog,
+                (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                 .ToList();
 
             return mapper.Map<IEnumerable<AttendanceLog>>(response);
@@ -59,8 +52,8 @@
                 .Where(x => list.Contains(x.LectureTheme))
                 .Include(x => x.AttendanceLog)
                 .ThenInclude(x => x.Student)
-                .SelectMany(x => x.AttendanceLog.DefaultIfEmpty(),
-                (theme, student) => new AttendanceLog { Lecture = theme, Student = student.Student})
+                .SelectMany(x => x.AttendanceLog,
+                (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
                 .ToList();
 
             return mapper.Map<IEnumerable<AttendanceLog>>(response);

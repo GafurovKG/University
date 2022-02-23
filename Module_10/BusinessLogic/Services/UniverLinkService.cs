@@ -16,6 +16,23 @@ namespace BusinessLogic
             this.lectureservice = lectionservice;
         }
 
+        public int NewAttendanceRecord(int lecture, List<int> students, List<int> marks)
+        {
+            var currentLecture = lectureservice.Get(lecture);
+            var currentStudents = studentservice.GetSeveral(students);
+            for(int i = 0; i < students.Count; i++)
+            {
+                currentLecture.AttendanceLog.Add(new AttendanceLog
+                {
+                    Student = currentStudents[i],
+                    HomeWorkMark = marks[i],
+                    Lecture = currentLecture
+                });
+            }
+            lectureservice.Edit(currentLecture);
+            return 0;
+        }
+
         public int NewHW(int lectureId, HomeWorkDb homeWork)
         {
             var lecture = lectureservice.Get(lectureId);
