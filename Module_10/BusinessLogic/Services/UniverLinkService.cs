@@ -8,28 +8,53 @@ namespace BusinessLogic
         private readonly IUniverService<StudentDb> studentservice;
         private readonly IUniverService<HomeWorkDb> hwservice;
         private readonly IUniverService<LectureDb> lectureservice;
+        private readonly IReportRepository reportRepository;
 
-        public UniverLinkService(IUniverService<StudentDb> studentservice, IUniverService<HomeWorkDb> hwservice, IUniverService<LectureDb> lectionservice)
+        public UniverLinkService(
+            IUniverService<StudentDb> studentservice,
+            IUniverService<HomeWorkDb> hwservice,
+            IUniverService<LectureDb> lectionservice,
+            IReportRepository reportRepository)
         {
             this.studentservice = studentservice;
             this.hwservice = hwservice;
             this.lectureservice = lectionservice;
+            this.reportRepository = reportRepository;
         }
 
-        public int NewAttendanceRecord(int lecture, List<int> students, List<int> marks)
+        public int NewAttendanceRecord(int lectureId, List<int> students, List<int> marks)
         {
-            var currentLecture = lectureservice.Get(lecture);
-            var currentStudents = studentservice.GetSeveral(students);
-            for(int i = 0; i < students.Count; i++)
+            var readlecture = reportRepository.GetLinkedLecture(lectureId);
+            readlecture.IsReaded = true;
+            var visitedStudents = studentservice.GetSeveral(students);
+            for (int i = 0; i < students.Count; i++)
             {
-                currentLecture.AttendanceLog.Add(new AttendanceLog
+                readlecture.AttendanceLog.Add(new AttendanceLog
                 {
-                    Student = currentStudents[i],
+                    Student = visitedStudents[i],
                     HomeWorkMark = marks[i],
-                    Lecture = currentLecture
+                    //Lecture = currentLecture,
+                    //LectureId = currentLecture.Id,
+                    //StudentId = visitedStudents[i].Id,
                 });
+                //visitedStudents[i].VisitedLectures.Add(readlecture);
+                lectureservice.Edit(readlecture);
             }
-            lectureservice.Edit(currentLecture);
+
+            //currentLecture.VisitedStudents.AddRange(visitedStudents);
+            //lectureservice.Edit(currentLecture);
+            //foreach (var item in visitedStudents)
+            //{
+            //    item.AttendanceLog.Add(new AttendanceLog
+            //        {
+            //        Lecture = readlecture
+            //        });
+            //    studentservice.Edit(item);
+            //}
+
+            var readLecturesId = lectureservice.GetAll().Where(x => x.IsReaded).Select(x => x.Id).ToList();
+            int[] ar = new int[] { 1, 2, 3 };
+            Notifications.checkTruancy(readLecturesId, reportRepository.GetSeveralLinkedStudents(ar.ToList()));
             return 0;
         }
 

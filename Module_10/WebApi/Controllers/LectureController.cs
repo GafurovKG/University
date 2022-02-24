@@ -53,7 +53,7 @@
         }*/
 
         [HttpPut("lectureIsReaded")]
-        public ActionResult<string> ReadLecture(int id, [FromQuery]List<int> students, [FromQuery] List<int> marks)
+        public ActionResult<string> LectureIsReaded(int id, [FromQuery]List<int> students, [FromQuery] List<int> marks)
         {
             var inst = linkService.NewAttendanceRecord(id, students, marks);
             return Ok($"api/lecture/{id}");

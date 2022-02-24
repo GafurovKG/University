@@ -26,7 +26,7 @@
                              (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                             .ToList();
 
-            return mapper.Map<IEnumerable<AttendanceLog>>(response);
+            return response;
         }
 
         public IEnumerable<AttendanceLog> GetStudents(string[] students)
@@ -41,7 +41,22 @@
                 (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                 .ToList();
 
-            return mapper.Map<IEnumerable<AttendanceLog>>(response);
+            return response;
+        }
+
+        public IEnumerable<AttendanceLog> GetStudents(int[] studentsId)
+        {
+            var list = studentsId.ToList();
+
+            var response = context.Students
+                .Where(x => list.Contains(x.Id))
+                .Include(x => x.AttendanceLog)
+                .ThenInclude(x => x.Lecture)
+                .SelectMany(x => x.AttendanceLog,
+                (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
+                .ToList();
+
+            return response;
         }
 
         public IEnumerable<AttendanceLog> GetLectures(string[] lectures)
@@ -56,7 +71,58 @@
                 (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
                 .ToList();
 
-            return mapper.Map<IEnumerable<AttendanceLog>>(response);
+            return response;
+        }
+
+        public IEnumerable<AttendanceLog> GetLectures(int[] lecturesId)
+        {
+            var list = lecturesId.ToList();
+
+            var response = context.Lectures
+                .Where(x => list.Contains(x.Id))
+                .Include(x => x.AttendanceLog)
+                .ThenInclude(x => x.Student)
+                .SelectMany(x => x.AttendanceLog,
+                (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
+                .ToList();
+
+            return response;
+        }
+
+        public StudentDb GetLinkedStudent(int id)
+        {
+            var response = context.Students
+                .Where(s => s.Id == id)
+                .Include(l => l.VisitedLectures)
+                .Include(a => a.AttendanceLog)
+                .FirstOrDefault();
+            return response;
+        }
+
+        public LectureDb GetLinkedLecture(int id)
+        {
+            var response = context.Lectures
+                .Where(s => s.Id == id)
+                .Include(l => l.VisitedStudents)
+                .Include(a => a.AttendanceLog).FirstOrDefault();
+            return response;
+        }
+
+        public List<StudentDb> GetSeveralLinkedStudents(List<int> ids)
+        {
+            var response = context.Students
+                .Where(x => ids.Contains(x.Id))
+                .Include(l => l.VisitedLectures)
+                .Include(a => a.AttendanceLog);
+            return response.ToList();
+        }
+        public List<LectureDb> GetSeveralLinkedLectures(List<int> ids)
+        {
+            var response = context.Lectures
+                .Where(x => ids.Contains(x.Id))
+                .Include(l => l.VisitedStudents)
+                .Include(a => a.AttendanceLog);
+            return response.ToList();
         }
     }
 }

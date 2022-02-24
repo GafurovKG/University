@@ -32,9 +32,9 @@ namespace BusinessLogic
             return univerRepository.GetAll().ToArray();
         }
 
-        public TEntity? GetSeveral(List<int> id)
+        public List<int> GetAllIds()
         {
-            throw new NotImplementedException();
+            return univerRepository.GetAllIds();
         }
 
         public int New(TEntity entity)

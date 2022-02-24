@@ -40,8 +40,6 @@
                 j.Property(pt => pt.HomeWorkMark).HasDefaultValue(0);
                 j.HasKey(t => new { t.LectureId, t.StudentId });
                 j.ToTable("AttendanceLog");
-                j.HasKey(t => new { t.LectureId, t.StudentId });
-                j.ToTable("AttendanceLog");
             });
 
 

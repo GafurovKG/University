@@ -7,5 +7,6 @@
         public HomeWorkDb? HomeWork { get; set; }
         public List<StudentDb> VisitedStudents { get; set; } = new();
         public List<AttendanceLog> AttendanceLog { get; set; } = new();
+        public bool IsReaded { get; set; }
     }
 }

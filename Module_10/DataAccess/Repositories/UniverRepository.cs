@@ -18,8 +18,13 @@
 
         public IReadOnlyCollection<TEntity> GetAll()
         {
-            var db = context.Set<TEntity>().ToList();
-            return mapper.Map<IReadOnlyCollection<TEntity>>(db);
+            var responre = context.Set<TEntity>().ToList();
+            return responre;
+        }
+
+        public List<int> GetAllIds()
+        {
+            return context.Set<TEntity>().Select(x => x.Id).ToList();
         }
 
         public TEntity? Get(int id)
@@ -53,7 +58,6 @@
         {
             var items = context.Set<TEntity>();
             var response = items.Where(x => ids.Contains(x.Id));
-
             return response.ToList();
         }
     }
