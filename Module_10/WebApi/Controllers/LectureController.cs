@@ -53,10 +53,10 @@
         }*/
 
         [HttpPut("lectureIsReaded")]
-        public ActionResult<string> LectureIsReaded(int id, [FromQuery]List<int> students, [FromQuery] List<int> marks)
+        public ActionResult<string> LectureIsReaded(int id, List<AttendanceRecordUI> records)
         {
-            var inst = linkService.NewAttendanceRecord(id, students, marks);
-            return Ok($"api/lecture/{id}");
+            var inst = linkService.NewAttendanceRecord(id, mapper.Map<List<AttendanceRecord>>(records));
+            return  Ok($"api/lecture/{id}");
         }
 
 /*        [HttpDelete("{id}")]

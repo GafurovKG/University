@@ -2,9 +2,10 @@
 {
     public record LectorDb : IIdPrpperty
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        //public List<LectureDb> Lectures { get; set; } = new();
+        public int Id { get; init; }
+        public string Name { get; init; } = null!;
+        public string Email { get; set; } = null!;
+
+        // public List<LectureDb> Lectures { get; set; } = new();
     }
 }

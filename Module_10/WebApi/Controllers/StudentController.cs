@@ -37,7 +37,7 @@
             return mapper.Map<IReadOnlyCollection<StudentUI>>(result).ToList();
         }
 
-/*        [HttpPost]
+        [HttpPost]
         public ActionResult AddStudent(StudentUIPost student)
         {
             var newStudentId = studentService.New(mapper.Map<StudentDb>(student));
@@ -57,6 +57,6 @@
         {
             studentService.Delete(id);
             return Ok();
-        }*/
+        }
     }
 }

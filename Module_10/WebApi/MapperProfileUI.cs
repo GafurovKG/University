@@ -20,6 +20,7 @@
                 .ForMember(x => x.StudentName, config => config.MapFrom(y => y.Student.Name))
                 .ForMember(x => x.LectureTheme, config => config.MapFrom(y => y.Lecture.LectureTheme))
                 .ForMember(x => x.HomeWorkMark, config => config.MapFrom(y => y.HomeWorkMark));
+            CreateMap<AttendanceRecordUI, AttendanceRecord>().ReverseMap();
         }
     }
 }

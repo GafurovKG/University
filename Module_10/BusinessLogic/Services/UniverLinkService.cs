@@ -22,35 +22,30 @@ namespace BusinessLogic
             this.reportRepository = reportRepository;
         }
 
-        public int NewAttendanceRecord(int lectureId, List<int> students, List<int> marks)
+        public int NewAttendanceRecord(int lectureId, List<AttendanceRecord> records)
         {
             var readlecture = reportRepository.GetLinkedLecture(lectureId);
+            if (readlecture.IsReaded)
+            {
+                throw new Exception("$Лекция { readlecture.Id } уже была почтена");
+                Console.WriteLine($"Лекция {readlecture.Id} уже была почтена");
+            }
+
             readlecture.IsReaded = true;
-            var visitedStudents = studentservice.GetSeveral(students);
-            for (int i = 0; i < students.Count; i++)
+            lectureservice.Edit(readlecture);
+            var studentsID = records.Select(s => s.Student).ToList();
+            var studentsMark = records.Select(s => s.Mark).ToList();
+            var visitedStudents = studentservice.GetSeveral(studentsID);
+            for (int i = 0; i < studentsID.Count; i++)
             {
                 readlecture.AttendanceLog.Add(new AttendanceLog
                 {
                     Student = visitedStudents[i],
-                    HomeWorkMark = marks[i],
-                    //Lecture = currentLecture,
-                    //LectureId = currentLecture.Id,
-                    //StudentId = visitedStudents[i].Id,
+                    HomeWorkMark = studentsMark[i],
                 });
-                //visitedStudents[i].VisitedLectures.Add(readlecture);
+
                 lectureservice.Edit(readlecture);
             }
-
-            //currentLecture.VisitedStudents.AddRange(visitedStudents);
-            //lectureservice.Edit(currentLecture);
-            //foreach (var item in visitedStudents)
-            //{
-            //    item.AttendanceLog.Add(new AttendanceLog
-            //        {
-            //        Lecture = readlecture
-            //        });
-            //    studentservice.Edit(item);
-            //}
 
             var readLecturesId = lectureservice.GetAll().Where(x => x.IsReaded).Select(x => x.Id).ToList();
             int[] ar = new int[] { 1, 2, 3 };

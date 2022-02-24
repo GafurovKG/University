@@ -5,10 +5,10 @@
 
     internal class UniverDbContext : DbContext
     {
-        public DbSet<StudentDb> Students { get; set; }
+        public DbSet<StudentDb> Students { get; set; } = null!;
         public DbSet<LectureDb> Lectures { get; set; }
-        public DbSet<HomeWorkDb> HomeWorks{ get; set; }
-        public DbSet<LectorDb> Lectors{ get; set; }
+        public DbSet<HomeWorkDb> HomeWorks { get; set; }
+        public DbSet<LectorDb> Lectors { get; set; }
 
         public UniverDbContext(DbContextOptions<UniverDbContext> options)
     : base(options)
