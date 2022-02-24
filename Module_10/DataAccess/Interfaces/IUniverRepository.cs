@@ -1,6 +1,7 @@
 ﻿namespace DataAccess
 {
     using System.Collections.Generic;
+
     public interface IUniverRepository<TEntity>
         where TEntity : class
     {

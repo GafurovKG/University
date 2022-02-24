@@ -89,6 +89,15 @@
             return response;
         }
 
+        public IEnumerable<StudentDb> GetAllLinkedStudents()
+        {
+            var response = context.Students
+            .Include(l => l.VisitedLectures)
+            .Include(a => a.AttendanceLog);
+
+            return response;
+        }
+
         public StudentDb GetLinkedStudent(int id)
         {
             var response = context.Students
@@ -123,6 +132,17 @@
                 .Include(l => l.VisitedStudents)
                 .Include(a => a.AttendanceLog);
             return response.ToList();
+        }
+
+        public IQueryable<StudentDb>? GetTruancyStudents(int readLectures)
+        {
+            var response = context.Set<StudentDb>().Where(x => readLectures - x.VisitedLectures.Count > 3);
+            return response;
+        }
+
+        public int GetReadlectures()
+        {
+            return context.Lectures.Where(l => l.IsReaded).Count();
         }
     }
 }

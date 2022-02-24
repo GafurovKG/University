@@ -5,25 +5,19 @@
 
     internal static class Notifications
     {
-        public static void checkTruancy(List<int> readlecturesId, IEnumerable<StudentDb> students)
+        public static void NoticeTruancyStudents(IQueryable<StudentDb> truancyStudents)
         {
-            const int maxTruancy = 3;
             var massageToLector = new StringBuilder();
-            foreach (var student in students)
+            foreach (var truancyStudent in truancyStudents)
             {
-                var visitedLecturesId = student.VisitedLectures.Select(x => x.Id).ToList();
-                var visitedFromReadLectures = readlecturesId.Where(x => visitedLecturesId.Contains(x)).ToList();
-                if (visitedFromReadLectures.Count() < maxTruancy && readlecturesId.Count() > maxTruancy)
-                {
-                    Console.WriteLine($"{student.Name} пропустил более 3-х лекций." +
-                        $" Уведомление будет отпраленно студенту на {student.Email}");
-                    massageToLector.AppendLine($"{student.Name} пропустл более 3-х лекций!)");
-                }
+                Console.WriteLine($"{truancyStudent.Name} пропустил более 3-х лекций." +
+                $" Уведомление будет отпраленно студенту на {truancyStudent.Email}");
+                massageToLector.AppendLine($"{truancyStudent.Name} пропустл более 3-х лекций!)");
             }
 
-            if (massageToLector.Length != null)
+            if (massageToLector.Length != 0)
             {
-                Console.WriteLine($"Для лектора курса: {massageToLector}");
+                Console.WriteLine($"Для лектора курса:\n {massageToLector}");
             }
         }
 

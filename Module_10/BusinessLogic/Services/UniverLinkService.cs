@@ -48,8 +48,8 @@ namespace BusinessLogic
             }
 
             var readLecturesId = lectureservice.GetAll().Where(x => x.IsReaded).Select(x => x.Id).ToList();
-            int[] ar = new int[] { 1, 2, 3 };
-            Notifications.checkTruancy(readLecturesId, reportRepository.GetSeveralLinkedStudents(ar.ToList()));
+            var readlecturesCount = reportRepository.GetReadlectures();
+            Notifications.NoticeTruancyStudents(reportRepository.GetTruancyStudents(reportRepository.GetReadlectures()));
             return 0;
         }
 
