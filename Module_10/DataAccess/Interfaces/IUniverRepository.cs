@@ -6,7 +6,7 @@
         where TEntity : class
     {
         TEntity? Get(int id);
-        List<TEntity>? GetSeveral(List<int> ids);
+        List<TEntity> GetSeveral(List<int> ids);
         IReadOnlyCollection<TEntity> GetAll();
         List<int> GetAllIds();
         int New(TEntity student);

@@ -16,7 +16,6 @@
         IEnumerable<AttendanceLog> GetStudents(string[] students);
         IEnumerable<AttendanceLog> GetLectures(int[] lectures);
         IEnumerable<AttendanceLog> GetLectures(string[] lectures);
-        IQueryable<StudentDb>? GetTruancyStudents(int readLectures);
-        int GetReadlectures();
+        IQueryable<StudentDb>? GetTruancyStudents();
     }
 }

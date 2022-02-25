@@ -22,20 +22,35 @@ namespace BusinessLogic
             this.reportRepository = reportRepository;
         }
 
-        public int NewAttendanceRecord(int lectureId, List<AttendanceRecord> records)
+        public int NewAttendanceRecord(int lectureId, List<AttendanceRecord> visitedStud)
         {
             var readlecture = reportRepository.GetLinkedLecture(lectureId);
             if (readlecture.IsReaded)
             {
-                throw new Exception("$Лекция { readlecture.Id } уже была почтена");
                 Console.WriteLine($"Лекция {readlecture.Id} уже была почтена");
+
+                // throw new Exception("$Лекция { readlecture.Id } уже была прочтена");
+                return 0;
+            }
+
+            if (visitedStud == null || visitedStud.Count == 0)
+            {
+                Console.WriteLine($"Лекцию {readlecture} не посетил ни один студент или данные не были переданы");
+                return 0;
             }
 
             readlecture.IsReaded = true;
             lectureservice.Edit(readlecture);
-            var studentsID = records.Select(s => s.Student).ToList();
-            var studentsMark = records.Select(s => s.Mark).ToList();
+            var studentsID = visitedStud.Select(s => s.Student).ToList();
+            var studentsMark = visitedStud.Select(s => s.Mark).ToList();
             var visitedStudents = studentservice.GetSeveral(studentsID);
+
+            if (visitedStudents == null || visitedStud.Count == 0)
+            {
+                Console.WriteLine($"В БД не найдены студенты с указанными Id");
+                return 0;
+            }
+
             for (int i = 0; i < studentsID.Count; i++)
             {
                 readlecture.AttendanceLog.Add(new AttendanceLog
@@ -47,9 +62,12 @@ namespace BusinessLogic
                 lectureservice.Edit(readlecture);
             }
 
-            var readLecturesId = lectureservice.GetAll().Where(x => x.IsReaded).Select(x => x.Id).ToList();
-            var readlecturesCount = reportRepository.GetReadlectures();
-            Notifications.NoticeTruancyStudents(reportRepository.GetTruancyStudents(reportRepository.GetReadlectures()));
+            var trucancyStudents = reportRepository.GetTruancyStudents();
+            if (trucancyStudents != null)
+            {
+            Notifications.NoticeTruancyStudents(trucancyStudents);
+            }
+
             return 0;
         }
 

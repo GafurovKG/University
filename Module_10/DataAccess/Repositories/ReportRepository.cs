@@ -134,15 +134,17 @@
             return response.ToList();
         }
 
-        public IQueryable<StudentDb>? GetTruancyStudents(int readLectures)
+        public IQueryable<StudentDb>? GetTruancyStudents()
         {
-            var response = context.Set<StudentDb>().Where(x => readLectures - x.VisitedLectures.Count > 3);
+            var readLectures = context.Lectures.Where(l => l.IsReaded).Count();
+            var response = context.Set<StudentDb>().Where(x => readLectures - x.VisitedLectures.Count > 3)
+                /*.Select(x => new StudentDb { Name = x.Name, Email = x.Email }) - в этой строчке нет смысла?*/;
             return response;
         }
 
-        public int GetReadlectures()
+        public IQueryable<StudentDb>? CheckAverageMark()
         {
-            return context.Lectures.Where(l => l.IsReaded).Count();
+            return null;
         }
     }
 }
