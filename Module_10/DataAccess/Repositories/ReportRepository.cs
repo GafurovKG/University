@@ -82,8 +82,9 @@
                 .Where(x => list.Contains(x.Id))
                 .Include(x => x.AttendanceLog)
                 .ThenInclude(x => x.Student)
-                .SelectMany(x => x.AttendanceLog,
-                (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
+                .SelectMany(
+                    x => x.AttendanceLog,
+                    (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
                 .ToList();
 
             return response;
@@ -142,9 +143,19 @@
             return response;
         }
 
-        public IQueryable<StudentDb>? CheckAverageMark()
+        public int GetReadLecturesCount()
         {
-            return null;
+            return context.Lectures.Where(l => l.IsReaded).Select(l => l.Id).Count();
+        }
+
+        public IEnumerable<AverageMarkLog>? GetLesserStudents()
+        {
+            var response = context.Set<AttendanceLog>()
+                .Include(x => x.Student)
+                .GroupBy(x => x.StudentId)
+                .Select(x => new { Average = x.Average(x => x.HomeWorkMark), Student = x.FirstOrDefault().Student })
+                .Where(am => am.Average > 4).ToList();
+            return response.Select(x => new AverageMarkLog(x.Student.Id, x.Student.Name, x.Student.Tel, x.Average)).ToList();
         }
     }
 }

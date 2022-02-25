@@ -5,7 +5,7 @@
 
     internal static class Notifications
     {
-        public static void NoticeTruancyStudents(IQueryable<StudentDb> truancyStudents)
+        public static void NoticeTruancyStudents(IEnumerable<StudentDb> truancyStudents)
         {
             var massageToLector = new StringBuilder();
             foreach (var truancyStudent in truancyStudents)
@@ -21,9 +21,13 @@
             }
         }
 
-        public static void CheckAverageMark()
+        public static void NoticeLesser(IEnumerable<AverageMarkLog> lessersStudents)
         {
-
+            foreach (var student in lessersStudents)
+            {
+                Console.WriteLine($"{student.Name} имеет седнюю оцнку ниже 4!" +
+                    $" Будет отправленно СМС по телефону {student.tel}");
+            }
         }
     }
 }

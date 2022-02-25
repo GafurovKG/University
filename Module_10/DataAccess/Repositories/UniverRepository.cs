@@ -58,8 +58,8 @@
         public List<TEntity>? GetSeveral(List<int> ids)
         {
             var response = context.Set<TEntity>()
-                .Where(x => ids.Contains(x.Id));
-            return response.ToList();
+                .Where(x => ids.Contains(x.Id)).ToList();
+            return response;
         }
     }
 }

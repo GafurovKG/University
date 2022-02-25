@@ -17,5 +17,7 @@
         IEnumerable<AttendanceLog> GetLectures(int[] lectures);
         IEnumerable<AttendanceLog> GetLectures(string[] lectures);
         IQueryable<StudentDb>? GetTruancyStudents();
+        int GetReadLecturesCount();
+        IEnumerable<AverageMarkLog>? GetLesserStudents();
     }
 }

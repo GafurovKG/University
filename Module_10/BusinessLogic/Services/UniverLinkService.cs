@@ -41,11 +41,20 @@ namespace BusinessLogic
 
             readlecture.IsReaded = true;
             lectureservice.Edit(readlecture);
+
+            var allStudents = studentservice.GetAll();
+
+            if (allStudents == null || allStudents.Count == 0 )
+            {
+                Console.WriteLine($"В БД нет записей о студентах");
+                return 0;
+            }
+
             var studentsID = visitedStud.Select(s => s.Student).ToList();
             var studentsMark = visitedStud.Select(s => s.Mark).ToList();
-            var visitedStudents = studentservice.GetSeveral(studentsID);
+            var visitedStudents = allStudents.Where(x => studentsID.Contains(x.Id)).ToList();
 
-            if (visitedStudents == null || visitedStud.Count == 0)
+            if (visitedStudents == null || visitedStudents.Count == 0)
             {
                 Console.WriteLine($"В БД не найдены студенты с указанными Id");
                 return 0;
@@ -62,12 +71,21 @@ namespace BusinessLogic
                 lectureservice.Edit(readlecture);
             }
 
-            var trucancyStudents = reportRepository.GetTruancyStudents();
+            var allreadLectures = reportRepository.GetReadLecturesCount();
+            var trucancyStudents = allStudents.Where(x => allreadLectures - x.VisitedLectures.Count > 3);
             if (trucancyStudents != null)
             {
-            Notifications.NoticeTruancyStudents(trucancyStudents);
+                Notifications.NoticeTruancyStudents(trucancyStudents);
             }
 
+            var lesserStudents = reportRepository.GetLesserStudents();
+            if (lesserStudents == null || lesserStudents.Count() == 0)
+            {
+                Console.WriteLine($"На курсе нет студентов со средней оценкой ниже 4");
+                return 0;
+            }
+
+            Notifications.NoticeLesser(lesserStudents);
             return 0;
         }
 
