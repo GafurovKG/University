@@ -41,7 +41,7 @@
         [HttpPost("addHWToLecture")]
         public ActionResult AddHomeWork(int lectureid, HomeWorkUIPost homeWork)
         {
-            var newHomeWorkId = linkService.NewHW(lectureid, mapper.Map<HomeWorkDb>(homeWork));
+            var newHomeWorkId = linkService.CreateHW(lectureid, mapper.Map<HomeWorkDb>(homeWork));
             return Ok($"api/homework/{newHomeWorkId}");
         }
 

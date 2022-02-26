@@ -7,7 +7,7 @@
         }
 
         public ObjectNotFoundInDb(string message)
-            : base (message)
+            : base(message)
         {
         }
 

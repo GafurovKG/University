@@ -1,7 +1,6 @@
 ﻿namespace DataAccess
 {
     using DataAccess.Models;
-    using Microsoft.EntityFrameworkCore;
 
     internal static class DefaultDB
     {
@@ -23,19 +22,19 @@
             var lecture2 = new LectureDb { LectureTheme = "Classes", IsReaded = true };
             var lecture3 = new LectureDb { LectureTheme = "Records", IsReaded = true };
             var lecture4 = new LectureDb { LectureTheme = "Interfaces", IsReaded = true };
-            var lecture5 = new LectureDb { LectureTheme = "OOP"};
+            var lecture5 = new LectureDb { LectureTheme = "OOP" };
             var lecture6 = new LectureDb { LectureTheme = "Events" };
             var lecture7 = new LectureDb { LectureTheme = "Lambda" };
-            studentContext.Lectures.AddRange(lecture1, lecture2, lecture3,lecture4,lecture5,lecture6,lecture7);
+            studentContext.Lectures.AddRange(lecture1, lecture2, lecture3, lecture4, lecture5, lecture6, lecture7);
             studentContext.SaveChanges();
 
-            var homework1 = new HomeWorkDb { HWDescription = "Strings?", Lecture = lecture1};
+            var homework1 = new HomeWorkDb { HWDescription = "Strings?", Lecture = lecture1 };
             var homework2 = new HomeWorkDb { HWDescription = "Classes?", Lecture = lecture2 };
-            var homework3 = new HomeWorkDb { HWDescription = "Records?", Lecture = lecture3};
-            var homework4 = new HomeWorkDb { HWDescription = "Interfaces", Lecture = lecture4};
-            var homework5 = new HomeWorkDb { HWDescription = "OOP?", Lecture = lecture5};
-            var homework6 = new HomeWorkDb { HWDescription = "Events?", Lecture = lecture6};
-            var homework7 = new HomeWorkDb { HWDescription = "Lambda?", Lecture = lecture7};
+            var homework3 = new HomeWorkDb { HWDescription = "Records?", Lecture = lecture3 };
+            var homework4 = new HomeWorkDb { HWDescription = "Interfaces", Lecture = lecture4 };
+            var homework5 = new HomeWorkDb { HWDescription = "OOP?", Lecture = lecture5 };
+            var homework6 = new HomeWorkDb { HWDescription = "Events?", Lecture = lecture6 };
+            var homework7 = new HomeWorkDb { HWDescription = "Lambda?", Lecture = lecture7 };
             studentContext.HomeWorks.AddRange(homework1, homework2, homework3, homework4, homework5, homework6, homework7);
 
             student1.AttendanceLog.AddRange(new List<AttendanceLog>

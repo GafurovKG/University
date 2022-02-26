@@ -7,7 +7,7 @@
         }
 
         public LectureWasReadExceptions(string message)
-            : base (message)
+            : base(message)
         {
         }
 

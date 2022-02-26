@@ -13,12 +13,10 @@
     {
         private readonly IUniverService<StudentDb> studentService;
         private readonly IMapper mapper;
-        private readonly ILogger<StudentController> logger;
-        public StudentController(IUniverService<StudentDb> univerService, IMapper mapper, ILogger<StudentController> logger)
+        public StudentController(IUniverService<StudentDb> univerService, IMapper mapper)
         {
             this.studentService = univerService;
             this.mapper = mapper;
-            this.logger = logger;
         }
 
 /*        [HttpGet("{id}")]

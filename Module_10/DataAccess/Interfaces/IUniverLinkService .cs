@@ -4,8 +4,8 @@
 
     public interface IUniverLinkService
     {
-        int NewHW(int lectureId, HomeWorkDb homeWork);
+        int CreateHW(int lectureId, HomeWorkDb homeWork);
         void EditHW(HomeWorkDb homeWork);
-        int NewAttendanceRecord(int lecture, IQueryable<AttendanceRecord> records);
+        LectureDb CreateAttendanceRecord(int lecture, IEnumerable<AttendanceRecord> records);
     }
 }

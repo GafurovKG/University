@@ -2,7 +2,6 @@
 {
     using AutoMapper;
     using DataAccess;
-    using DataAccess.Models;
     using Microsoft.AspNetCore.Mvc;
     using WebApi.UIModels;
 
@@ -22,7 +21,6 @@
         [HttpPost("selectedattendancelog")]
         public ActionResult<IEnumerable<ReportLogUI>> GetReport([FromQuery] string[] students, [FromQuery] string[] lectures)
         {
-
             var reuslt = reportService.GetReport(students, lectures);
             return mapper.Map<IEnumerable<ReportLogUI>>(reuslt).ToList();
         }

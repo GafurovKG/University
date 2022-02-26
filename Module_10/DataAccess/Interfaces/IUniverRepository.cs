@@ -10,7 +10,7 @@
         IReadOnlyCollection<TEntity> GetAll();
         List<int> GetAllIds();
         int New(TEntity student);
-        void Edit(TEntity student);
+        int Edit(TEntity student);
         void Delete(int id);
     }
 }

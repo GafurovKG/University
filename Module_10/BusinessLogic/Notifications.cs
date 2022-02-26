@@ -31,7 +31,7 @@
             foreach (var student in lessersStudents)
             {
                 var message = $"{student.Name} имеет седнюю оцнку ниже 4!" +
-                    $" Будет отправленно СМС по телефону {student.tel}";
+                    $" Будет отправленно СМС по телефону {student.Tel}";
                 logger.LogInformation(message);
 
                 // метод отправки СМС

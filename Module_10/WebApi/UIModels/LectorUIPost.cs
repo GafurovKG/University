@@ -2,8 +2,7 @@
 {
     public class LectorUIPost
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        //public List<LectureUIPost> Lectures { get; set; } = new();
+        public string Name { get; set; } = null!;
+        public string Email { get; set; } = null!;
     }
 }

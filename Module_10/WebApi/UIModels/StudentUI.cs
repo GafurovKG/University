@@ -1,6 +1,5 @@
 ﻿namespace WebApi.UIModels
 {
-    using DataAccess;
     public record StudentUI
     {
         public int Id { get; init; }

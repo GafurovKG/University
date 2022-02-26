@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using DataAccess;
+﻿using DataAccess;
 
 namespace BusinessLogic
 {
@@ -18,9 +17,9 @@ namespace BusinessLogic
             univerRepository.Delete(id);
         }
 
-        public void Edit(TEntity entity)
+        public int Edit(TEntity entity)
         {
-            univerRepository.Edit(entity);
+            return univerRepository.Edit(entity);
         }
 
         public TEntity Get(int id)

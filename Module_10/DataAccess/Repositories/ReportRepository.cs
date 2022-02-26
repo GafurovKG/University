@@ -1,13 +1,11 @@
 ﻿namespace DataAccess
 {
     using System.Linq;
-    using AutoMapper;
     using DataAccess.Exceptions;
     using DataAccess.Models;
     using Microsoft.EntityFrameworkCore;
 
     internal class ReportRepository : IReportRepository
-
     {
         private readonly UniverDbContext context;
 
@@ -157,7 +155,7 @@
             return response;
         }
 
-        public IQueryable<StudentDb> GetSeveralLinkedStudents(IQueryable<int> ids)
+        public IEnumerable<StudentDb> GetSeveralLinkedStudents(IEnumerable<int> ids)
         {
             var response = context.Students
                 .Where(x => ids.Contains(x.Id))
@@ -171,7 +169,7 @@
             return response;
         }
 
-        public List<LectureDb> GetSeveralLinkedLectures(List<int> ids)
+        public IEnumerable<LectureDb> GetSeveralLinkedLectures(List<int> ids)
         {
             var response = context.Lectures
                 .Where(x => ids.Contains(x.Id))
@@ -185,7 +183,7 @@
             return response.ToList();
         }
 
-        public IQueryable<StudentDb>? GetTruancyStudents()
+        public IEnumerable<StudentDb>? GetTruancyStudents()
         {
             var readLectures = context.Lectures.Where(l => l.IsReaded).Count();
             var response = context.Set<StudentDb>().Where(x => readLectures - x.VisitedLectures.Count > 3);

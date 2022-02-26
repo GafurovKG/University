@@ -1,4 +1,8 @@
 ﻿namespace DataAccess.Models
 {
-    public record AttendanceRecord(int StudentId, int Mark);
+    public record AttendanceRecord
+    {
+        public int StudentId { get; init; }
+        public int Mark { get; set; }
+    }
 }

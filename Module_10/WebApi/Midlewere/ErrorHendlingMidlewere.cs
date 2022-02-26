@@ -35,7 +35,7 @@
                     statusCode = httpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 }
 
-                _logger.LogWarning(ex, MessageFormat, httpContext.Request.Method, GetPath(httpContext), statusCode, ex.Message);
+                _logger.LogInformation(ex, MessageFormat, httpContext.Request.Method, GetPath(httpContext), statusCode, ex.Message);
             }
             catch (LectureWasReadExceptions ex)
             {

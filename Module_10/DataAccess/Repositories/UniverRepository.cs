@@ -1,8 +1,6 @@
 ﻿namespace DataAccess
 {
     using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using AutoMapper;
     using DataAccess.Exceptions;
     using Microsoft.EntityFrameworkCore;
 
@@ -56,10 +54,11 @@
             return result.Entity.Id;
         }
 
-        public void Edit(TEntity entity)
+        public int Edit(TEntity entity)
         {
-                context.Entry(entity).State = EntityState.Modified;
-                context.SaveChanges();
+            context.Entry(entity).State = EntityState.Modified;
+            context.SaveChanges();
+            return entity.Id;
         }
 
         public void Delete(int id)
