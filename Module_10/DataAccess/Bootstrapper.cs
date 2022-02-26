@@ -13,7 +13,6 @@
             DefaultDB.CreateDafaultDB(new UniverDbContext(optionsBuilder.Options));
 
             return services
-                .AddAutoMapper(typeof(MapperProfile))
                 .AddDbContext<UniverDbContext>(options => options.UseNpgsql(connectionString))
                 .AddScoped<IUniverRepository<StudentDb>, UniverRepository<StudentDb>>()
                 .AddScoped<IUniverRepository<LectorDb>, UniverRepository<LectorDb>>()

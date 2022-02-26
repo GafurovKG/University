@@ -23,7 +23,7 @@ namespace BusinessLogic
             univerRepository.Edit(entity);
         }
 
-        public TEntity? Get(int id)
+        public TEntity Get(int id)
         {
             return univerRepository.Get(id);
         }
@@ -43,7 +43,7 @@ namespace BusinessLogic
             return univerRepository.New(entity);
         }
 
-        List<TEntity>? IUniverService<TEntity>.GetSeveral(List<int> ids)
+        List<TEntity> IUniverService<TEntity>.GetSeveral(List<int> ids)
         {
             return univerRepository.GetSeveral(ids);
         }

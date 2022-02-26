@@ -10,7 +10,7 @@
         LectureDb GetLinkedLecture(int id);
         StudentDb GetLinkedStudent(int id);
         List<LectureDb> GetSeveralLinkedLectures(List<int> ids);
-        List<StudentDb> GetSeveralLinkedStudents(List<int> ids);
+        IQueryable<StudentDb> GetSeveralLinkedStudents(IQueryable<int> ids);
         IEnumerable<AttendanceLog> GetAll();
         IEnumerable<AttendanceLog> GetStudents(int[] studentsId);
         IEnumerable<AttendanceLog> GetStudents(string[] students);

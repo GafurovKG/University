@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using AutoMapper;
+    using DataAccess.Exceptions;
     using DataAccess.Models;
     using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +10,10 @@
 
     {
         private readonly UniverDbContext context;
-        private readonly IMapper mapper;
 
-        public ReportRepository(UniverDbContext UniverContext, IMapper mapper)
+        public ReportRepository(UniverDbContext UniverContext)
         {
             context = UniverContext;
-            this.mapper = mapper;
         }
 
         public IEnumerable<AttendanceLog> GetAll()
@@ -22,9 +21,14 @@
             var response = context.Students
                             .Include(x => x.AttendanceLog)
                             .ThenInclude(x => x.Lecture)
-                            .SelectMany(x => x.AttendanceLog,
-                             (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
+                            .SelectMany(
+                                x => x.AttendanceLog,
+                                (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                             .ToList();
+            if (response == null || response.Count == 0)
+            {
+                throw new ObjectNotFoundInDb($"В журнале посещаемости нет записей");
+            }
 
             return response;
         }
@@ -37,9 +41,14 @@
                 .Where(x => list.Contains(x.Name))
                 .Include(x => x.AttendanceLog)
                 .ThenInclude(x => x.Lecture)
-                .SelectMany(x => x.AttendanceLog,
-                (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
+                .SelectMany(
+                    x => x.AttendanceLog,
+                    (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                 .ToList();
+            if (response == null || response.Count == 0)
+            {
+                throw new ObjectNotFoundInDb($"Студенты {students} не найдены в БД");
+            }
 
             return response;
         }
@@ -52,9 +61,14 @@
                 .Where(x => list.Contains(x.Id))
                 .Include(x => x.AttendanceLog)
                 .ThenInclude(x => x.Lecture)
-                .SelectMany(x => x.AttendanceLog,
-                (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
+                .SelectMany(
+                    x => x.AttendanceLog,
+                    (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                 .ToList();
+            if (response == null || response.Count == 0)
+            {
+                throw new ObjectNotFoundInDb($"Студенты {studentsId} не найдены в БД");
+            }
 
             return response;
         }
@@ -67,9 +81,15 @@
                 .Where(x => list.Contains(x.LectureTheme))
                 .Include(x => x.AttendanceLog)
                 .ThenInclude(x => x.Student)
-                .SelectMany(x => x.AttendanceLog,
-                (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
+                .SelectMany(
+                    x => x.AttendanceLog,
+                    (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
                 .ToList();
+
+            if (response == null || response.Count == 0)
+            {
+                throw new ObjectNotFoundInDb($"Лекции {lectures} не найдены в БД");
+            }
 
             return response;
         }
@@ -87,6 +107,11 @@
                     (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
                 .ToList();
 
+            if (response == null || response.Count == 0)
+            {
+                throw new ObjectNotFoundInDb($"Лекции {lecturesId} не найдены в БД");
+            }
+
             return response;
         }
 
@@ -95,6 +120,10 @@
             var response = context.Students
             .Include(l => l.VisitedLectures)
             .Include(a => a.AttendanceLog);
+            if (response == null || response.Count() == 0)
+            {
+                throw new ObjectNotFoundInDb($"Студенты не найдены в БД");
+            }
 
             return response;
         }
@@ -106,6 +135,11 @@
                 .Include(l => l.VisitedLectures)
                 .Include(a => a.AttendanceLog)
                 .FirstOrDefault();
+            if (response == null)
+            {
+                throw new ObjectNotFoundInDb($"Студент {id} не найден в БД");
+            }
+
             return response;
         }
 
@@ -115,31 +149,46 @@
                 .Where(s => s.Id == id)
                 .Include(l => l.VisitedStudents)
                 .Include(a => a.AttendanceLog).FirstOrDefault();
+            if (response == null)
+            {
+                throw new ObjectNotFoundInDb($"Лекция {id} не найдена в БД");
+            }
+
             return response;
         }
 
-        public List<StudentDb> GetSeveralLinkedStudents(List<int> ids)
+        public IQueryable<StudentDb> GetSeveralLinkedStudents(IQueryable<int> ids)
         {
             var response = context.Students
                 .Where(x => ids.Contains(x.Id))
                 .Include(l => l.VisitedLectures)
                 .Include(a => a.AttendanceLog);
-            return response.ToList();
+            if (response == null || response.Count() == 0)
+            {
+                throw new ObjectNotFoundInDb($"Студенты {ids} не найдены в БД");
+            }
+
+            return response;
         }
+
         public List<LectureDb> GetSeveralLinkedLectures(List<int> ids)
         {
             var response = context.Lectures
                 .Where(x => ids.Contains(x.Id))
                 .Include(l => l.VisitedStudents)
                 .Include(a => a.AttendanceLog);
+            if (response == null || response.Count() == 0)
+            {
+                throw new ObjectNotFoundInDb($"Лекции {ids} не найдены в БД");
+            }
+
             return response.ToList();
         }
 
         public IQueryable<StudentDb>? GetTruancyStudents()
         {
             var readLectures = context.Lectures.Where(l => l.IsReaded).Count();
-            var response = context.Set<StudentDb>().Where(x => readLectures - x.VisitedLectures.Count > 3)
-                /*.Select(x => new StudentDb { Name = x.Name, Email = x.Email }) - в этой строчке нет смысла?*/;
+            var response = context.Set<StudentDb>().Where(x => readLectures - x.VisitedLectures.Count > 3);
             return response;
         }
 
@@ -153,7 +202,7 @@
             var response = context.Set<AttendanceLog>()
                 .Include(x => x.Student)
                 .GroupBy(x => x.StudentId)
-                .Select(x => new { Average = x.Average(x => x.HomeWorkMark), Student = x.FirstOrDefault().Student })
+                .Select(x => new { Average = x.Average(x => x.HomeWorkMark), x.First().Student })
                 .Where(am => am.Average > 4).ToList();
             return response.Select(x => new AverageMarkLog(x.Student.Id, x.Student.Name, x.Student.Tel, x.Average)).ToList();
         }

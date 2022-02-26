@@ -13,11 +13,12 @@
     {
         private readonly IUniverService<StudentDb> studentService;
         private readonly IMapper mapper;
-
-        public StudentController(IUniverService<StudentDb> univerService, IMapper mapper)
+        private readonly ILogger<StudentController> logger;
+        public StudentController(IUniverService<StudentDb> univerService, IMapper mapper, ILogger<StudentController> logger)
         {
             this.studentService = univerService;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
 /*        [HttpGet("{id}")]
@@ -41,8 +42,7 @@
         public ActionResult AddStudent(StudentUIPost student)
         {
             var newStudentId = studentService.New(mapper.Map<StudentDb>(student));
-            return Ok($"api/student/{newStudentId}\n" +
-                $"{studentService.Get(newStudentId)}");
+            return Ok($"api/student/{newStudentId}\n");
         }
 
         [HttpPut("{id}")]

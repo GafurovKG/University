@@ -5,7 +5,7 @@
     public interface IUniverRepository<TEntity>
         where TEntity : class
     {
-        TEntity? Get(int id);
+        TEntity Get(int id);
         List<TEntity> GetSeveral(List<int> ids);
         IReadOnlyCollection<TEntity> GetAll();
         List<int> GetAllIds();

@@ -13,12 +13,14 @@
         private readonly IUniverService<LectureDb> lectureService;
         private readonly IUniverLinkService linkService;
         private readonly IMapper mapper;
+        private readonly ILogger<LectureController> logger;
 
-        public LectureController(IUniverLinkService linkService, IUniverService<LectureDb> univerService, IMapper mapper)
+        public LectureController(IUniverLinkService linkService, IUniverService<LectureDb> univerService, IMapper mapper, ILogger<LectureController> logger)
         {
             this.linkService = linkService;
             this.lectureService = univerService;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
 /*        [HttpGet("{id}")]
@@ -53,9 +55,11 @@
         }*/
 
         [HttpPut("lectureIsReaded")]
-        public ActionResult<string> LectureIsReaded(int id, List<AttendanceRecordUI> visitedStudents)
+        public ActionResult<string> LectureIsReaded(int id, IQueryable<AttendanceRecordUI> visitedStudents)
         {
-            linkService.NewAttendanceRecord(id, mapper.Map<List<AttendanceRecord>>(visitedStudents));
+            logger.LogWarning("Hello, this is the index!");
+            linkService.NewAttendanceRecord(id, mapper.Map<IQueryable<AttendanceRecord>>(visitedStudents));
+
             return Ok($"api/lecture/{id}");
         }
 
