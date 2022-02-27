@@ -42,23 +42,5 @@
                 j.ToTable("AttendanceLog");
             });
         }
-
-/*        public UniverDbContext()
-        {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Univer;Username=postgres;Password=123456");
-        }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<StudentDb>().HasData(
-                new StudentDb { Id = 1, Name = "Tom", Email = "Tom@email.com" },
-                new StudentDb { Id = 2, Name = "Hary Potter", Email = "Harry@hogvards.uk" },
-                new StudentDb { Id = 3, Name = "Pinocio", Email = "buratino@sherwood.uk" });
-        }*/
     }
 }

@@ -43,10 +43,6 @@
                     x => x.AttendanceLog,
                     (student, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Student = student })
                 .ToList();
-            if (response == null || response.Count == 0)
-            {
-                throw new ObjectNotFoundInDb($"Студенты {students} не найдены в БД");
-            }
 
             return response;
         }
@@ -83,11 +79,6 @@
                     x => x.AttendanceLog,
                     (lecture, AttendanceRecord) => new AttendanceLog(AttendanceRecord) { Lecture = lecture })
                 .ToList();
-
-            if (response == null || response.Count == 0)
-            {
-                throw new ObjectNotFoundInDb($"Лекции {lectures} не найдены в БД");
-            }
 
             return response;
         }

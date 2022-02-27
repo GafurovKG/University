@@ -40,11 +40,15 @@ namespace LectureController.IntegrationTest
                 builder.ConfigureTestServices(services =>
                 {
                     var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<UniverDbContext>));
-                    services.Remove(dbContextDescriptor);
-                    services.AddDbContext<UniverDbContext>(options => options.UseInMemoryDatabase("UniverInMemoryDb"));
+                    if (dbContextDescriptor != null)
+                    {
+                        services.Remove(dbContextDescriptor);
+                        services.AddDbContext<UniverDbContext>(options => options.UseInMemoryDatabase("UniverInMemoryDb"));
+                    }
                 });
             });
-            dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<UniverDbContext>();
+
+            dbContext = webHost.Services.CreateScope().ServiceProvider.GetService<UniverDbContext>()!;
             notReadLectureInDb = new LectureDb { Id = 1, IsReaded = false, LectureTheme = "tests" };
             readLectureInDb = new LectureDb { Id = 2, IsReaded = true, LectureTheme = "tests" };
             await dbContext.Lectures.AddRangeAsync(notReadLectureInDb, readLectureInDb);
@@ -71,7 +75,6 @@ namespace LectureController.IntegrationTest
             lectureId = notReadLectureInDb.Id;
 
             // Act
-
             HttpResponseMessage response = await httpClient.PutAsync($"api/lecture/lectureIsReaded?id={lectureId}", content);
 
             // Assert
@@ -85,7 +88,6 @@ namespace LectureController.IntegrationTest
             lectureId = readLectureInDb.Id;
 
             // Act
-
             HttpResponseMessage response = await httpClient.PutAsync($"api/lecture/lectureIsReaded?id={lectureId}", content);
 
             // Assert
@@ -106,7 +108,6 @@ namespace LectureController.IntegrationTest
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             // Act
-
             HttpResponseMessage response = await httpClient.PutAsync($"api/lecture/lectureIsReaded?id={lectureId}", content);
 
             // Assert

@@ -13,14 +13,12 @@
         private readonly IUniverService<LectureDb> lectureService;
         private readonly IUniverLinkService linkService;
         private readonly IMapper mapper;
-        private readonly ILogger<LectureController> logger;
 
-        public LectureController(IUniverLinkService linkService, IUniverService<LectureDb> univerService, IMapper mapper, ILogger<LectureController> logger)
+        public LectureController(IUniverLinkService linkService, IUniverService<LectureDb> univerService, IMapper mapper)
         {
             this.linkService = linkService;
             this.lectureService = univerService;
             this.mapper = mapper;
-            this.logger = logger;
         }
 
 /*        [HttpGet("{id}")]
@@ -57,6 +55,11 @@
         [HttpPut("lectureIsReaded")]
         public IActionResult LectureIsRead(int id, List<AttendanceRecordUI> visitedStudents)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = linkService.CreateAttendanceRecord(id, mapper.Map<List<AttendanceRecord>>(visitedStudents).AsQueryable());
             return Ok($"api/lecture/lectureIsReaded/{result.Id}");
         }
