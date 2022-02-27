@@ -55,11 +55,10 @@
         }*/
 
         [HttpPut("lectureIsReaded")]
-        public ActionResult<string> LectureIsReaded(int id, List<AttendanceRecordUI> visitedStudents)
+        public IActionResult LectureIsRead(int id, List<AttendanceRecordUI> visitedStudents)
         {
-            logger.LogWarning("Hello, this is the index!");
             var result = linkService.CreateAttendanceRecord(id, mapper.Map<List<AttendanceRecord>>(visitedStudents).AsQueryable());
-            return Ok($"Лекция {result.Id} прочитана, отмечно студентов: {result.AttendanceLog.Count()}");
+            return Ok($"api/lecture/lectureIsReaded/{result.Id}");
         }
 
 /*        [HttpDelete("{id}")]}

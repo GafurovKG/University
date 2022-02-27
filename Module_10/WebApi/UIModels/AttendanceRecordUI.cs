@@ -1,6 +1,8 @@
 ﻿namespace WebApi.UIModels
 {
-    public record AttendanceRecordUI(int StudentId, int Mark)
+    public record AttendanceRecordUI
     {
+        public int StudentId { get; set; }
+        public int Mark { get; set; }
     }
 }

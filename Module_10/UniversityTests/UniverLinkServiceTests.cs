@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using BusinessLogic;
-using BusinessLogic.Exceptions;
-using DataAccess;
-using DataAccess.Models;
-using Microsoft.Extensions.Logging;
-using Moq;
 using NUnit.Framework;
+using BusinessLogic;
+using Moq;
+using DataAccess.Models;
+using System.Linq;
+using DataAccess;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using BusinessLogic.Exceptions;
 
 namespace UniversityTests
 {
@@ -41,7 +41,6 @@ namespace UniversityTests
             mockReportRepository.Setup(a => a.GetLinkedLecture(1)).Returns(new LectureDb { IsReaded = false });
 
             Assert.Throws<LectureWasReadExceptions>(() => linkService.CreateAttendanceRecord(0, new List<AttendanceRecord>().AsQueryable()));
-            Assert.Throws<StudentsDidntAttendLecture>(() => linkService.CreateAttendanceRecord(1, new List<AttendanceRecord>()));
         }
 
         [Test]
@@ -72,4 +71,5 @@ namespace UniversityTests
             Assert.AreEqual(expected, result.AttendanceLog);
         }
     }
+
 }

@@ -200,9 +200,9 @@
             var response = context.Set<AttendanceLog>()
                 .Include(x => x.Student)
                 .GroupBy(x => x.StudentId)
-                .Select(x => new { Average = x.Average(x => x.HomeWorkMark), x.First().Student })
-                .Where(am => am.Average > 4).ToList();
-            return response.Select(x => new AverageMarkLog(x.Student.Id, x.Student.Name, x.Student.Tel, x.Average)).ToList();
+                .Select(x => new { Average = x.Average(x => x.HomeWorkMark), x.First().Student }).ToList()
+                .Where(am => am.Average > 4);
+            return response.Select(x => new AverageMarkLog(x.Student.Id, x.Student.Name, x.Student.Tel, x.Average));
         }
     }
 }

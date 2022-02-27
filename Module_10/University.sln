@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{E5AB6421-30B1-4AAB-9DE7-5BE4D0381FB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityTests", "UniversityTests\UniversityTests.csproj", "{E9E07CB5-DA54-40E2-A45D-94E6E0AFCE0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University.UnitTests", "UniversityTests\University.UnitTests.csproj", "{E9E07CB5-DA54-40E2-A45D-94E6E0AFCE0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University.IntegrationTests", "LectureController.IntegrationTest\University.IntegrationTests.csproj", "{CFB371D0-DE8A-4162-A8D3-7844DDB006EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E9E07CB5-DA54-40E2-A45D-94E6E0AFCE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9E07CB5-DA54-40E2-A45D-94E6E0AFCE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9E07CB5-DA54-40E2-A45D-94E6E0AFCE0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFB371D0-DE8A-4162-A8D3-7844DDB006EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFB371D0-DE8A-4162-A8D3-7844DDB006EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFB371D0-DE8A-4162-A8D3-7844DDB006EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFB371D0-DE8A-4162-A8D3-7844DDB006EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
