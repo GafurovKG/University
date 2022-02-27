@@ -2,10 +2,10 @@
 {
     using BusinessLogic;
     using DataAccess;
-    using DataAccess.Models;
     using FluentValidation;
     using FluentValidation.AspNetCore;
     using WebApi.Configurations;
+    using WebApi.UIModels;
 
     public class Startup
     {
@@ -21,7 +21,8 @@
             services.AddAutoMapper(typeof(MapperProfileUI));
             services.AddControllers();
             services.AddFluentValidation();
-            services.AddTransient<IValidator<StudentDb>, StudentDbValidator>();
+            services.AddTransient<IValidator<StudentUIPost>, StudentUIPostValidator>();
+            services.AddTransient<IValidator<AttendanceRecordUI>, AttendanceRecordUIValidator>();
             services.AddBusinessLogic();
             services.AddDataAccess(Configuration.GetConnectionString("StudentDb"));
             services.AddSwaggerGen();

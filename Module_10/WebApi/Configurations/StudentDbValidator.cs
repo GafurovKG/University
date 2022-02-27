@@ -1,11 +1,11 @@
 ﻿namespace WebApi.Configurations
 {
-    using DataAccess.Models;
     using FluentValidation;
+    using WebApi.UIModels;
 
-    public class StudentDbValidator : AbstractValidator<StudentDb>
+    public class StudentUIPostValidator : AbstractValidator<StudentUIPost>
     {
-        public StudentDbValidator()
+        public StudentUIPostValidator()
         {
             RuleFor(x => x.Email).EmailAddress().NotEmpty().NotNull();
             RuleFor(x => x.Name).NotNull().NotEmpty();

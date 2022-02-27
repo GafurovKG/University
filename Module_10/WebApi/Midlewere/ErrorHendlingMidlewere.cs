@@ -10,7 +10,7 @@
 
     public class ErrorHendlingMidlewere
     {
-        private const string MessageFormat = "HTTP {0} {1} responsed {2} ({3}), {4}";
+        private const string MessageFormat = "HTTP {0} {1} responsed {2} ({3})";
 
         private readonly RequestDelegate _next;
         private readonly ILogger<ErrorHendlingMidlewere> _logger;
@@ -43,11 +43,12 @@
                 if (httpContext.Response != null)
                 {
                     statusCode = httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    //await httpContext.Response.WriteAsync($"{statusCode}: {ex.Message}");
+
+                    // await httpContext.Response.WriteAsync($"{statusCode}: {ex.Message}");
                     await Results.Text(ex.Message).ExecuteAsync(httpContext);
                 }
 
-                _logger.LogWarning(ex, MessageFormat, httpContext.Request.Method, GetPath(httpContext), statusCode, ex.Message, httpContext.Response.Body.ToString());
+                _logger.LogWarning(ex, MessageFormat, httpContext.Request.Method, GetPath(httpContext), statusCode, ex.Message);
             }
             catch (Exception ex)
             {

@@ -39,6 +39,11 @@
         [HttpPost]
         public ActionResult AddStudent(StudentUIPost student)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var newStudentId = studentService.New(mapper.Map<StudentDb>(student));
             return Ok($"api/student/{newStudentId}\n");
         }
