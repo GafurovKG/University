@@ -98,17 +98,19 @@ namespace LectureController.IntegrationTest
         public async Task LectureIsRead_NotStudentinDb_Resoult404()
         {
             // Arrange
-            lectureId = notReadLectureInDb.Id;
-            var unnounStudents = new List<AttendanceRecordUI>
+            notReadLectureInDb.IsReaded = false;
+            dbContext.Entry(notReadLectureInDb).State = EntityState.Modified;
+            dbContext.SaveChanges();
+            var unknownStudents = new List<AttendanceRecordUI>
             {
                 new AttendanceRecordUI { StudentId = 500, Mark = 5 },
             };
-            string json = JsonConvert.SerializeObject(unnounStudents);
+            string json = JsonConvert.SerializeObject(unknownStudents);
             content = new StringContent(json);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             // Act
-            HttpResponseMessage response = await httpClient.PutAsync($"api/lecture/lectureIsReaded?id={lectureId}", content);
+            HttpResponseMessage response = await httpClient.PutAsync($"api/lecture/lectureIsReaded?id={notReadLectureInDb.Id}", content);
 
             // Assert
             Assert.AreEqual(expected: HttpStatusCode.NotFound, actual: response.StatusCode);
